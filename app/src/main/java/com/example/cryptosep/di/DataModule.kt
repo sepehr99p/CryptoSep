@@ -3,7 +3,7 @@ package com.example.cryptosep.di
 import com.example.cryptosep.data.remote.KucoinApiService
 import com.example.cryptosep.data.repository.KucoinRepositoryImpl
 import com.example.cryptosep.domain.repository.KucoinRepository
-import com.example.cryptosep.domain.usecase.FetchCurrencyListUseCase
+import com.example.cryptosep.domain.usecase.CurrencyListUseCase
 import com.example.cryptosep.domain.usecase.FetchTickerUseCase
 import com.example.cryptosep.domain.usecase.MarketListUseCase
 import com.example.cryptosep.domain.usecase.TickerListUseCase
@@ -23,8 +23,8 @@ object DataModule {
         KucoinRepositoryImpl(api)
 
     @Provides
-    fun provideCurrencyUseCase(repository: KucoinRepository): FetchCurrencyListUseCase =
-        FetchCurrencyListUseCase(repository)
+    fun provideCurrencyUseCase(repository: KucoinRepository): CurrencyListUseCase =
+        CurrencyListUseCase(repository)
 
     @Provides
     fun provideTickerUseCase(repository: KucoinRepository): FetchTickerUseCase =
