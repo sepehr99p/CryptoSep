@@ -19,4 +19,7 @@ interface KucoinApiService {
     @GET("/api/v1/market/allTickers")
     suspend fun fetchAllTickers(): Response<BaseResponse<AllTickersResponse>>
 
+    @GET("/api/v1/markets")
+    suspend fun fetchMarketList() : Response<BaseResponse<List<String>>>
+
 }
