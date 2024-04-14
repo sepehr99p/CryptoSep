@@ -13,7 +13,7 @@ fun HomeScreen() {
     val marketState = viewModel.marketList.collectAsState()
 
     currencyState.value.data?.let {
-        CurrencyListComponent(it)
+        CurrencyListComponent(currencyEntities = it)
     }
 
 }
