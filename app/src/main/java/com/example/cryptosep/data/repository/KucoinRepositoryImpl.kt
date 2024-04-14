@@ -12,9 +12,7 @@ import com.example.cryptosep.domain.entity.TickerEntity
 import com.example.cryptosep.domain.repository.KucoinRepository
 import com.example.cryptosep.domain.utils.ResultState
 
-class KucoinRepositoryImpl(
-    private val apiService: KucoinApiService
-) : KucoinRepository {
+class KucoinRepositoryImpl(private val apiService: KucoinApiService) : KucoinRepository {
     override suspend fun fetchCurrencyList(): ResultState<List<CurrencyEntity>> =
         toResultState(apiService.fetchCurrencyList(), currencyListMapper)
 
