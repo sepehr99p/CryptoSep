@@ -10,8 +10,9 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.onStart
+import javax.inject.Inject
 
-class FetchTickerUseCase(private val kucoinRepository: KucoinRepository) {
+class FetchTickerUseCase @Inject constructor(private val kucoinRepository: KucoinRepository) {
     suspend operator fun invoke(symbol: String): Flow<ResultState<SingleTickerEntity>> = flow {
         emit(kucoinRepository.fetchTicker(symbol))
     }.retryWithPolicy(DefaultRetryPolicy())

@@ -10,8 +10,9 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.onStart
+import javax.inject.Inject
 
-class FetchCurrencyListUseCase(private val kucoinRepository: KucoinRepository) {
+class FetchCurrencyListUseCase @Inject constructor(private val kucoinRepository: KucoinRepository) {
     suspend operator fun invoke(): Flow<ResultState<List<CurrencyEntity>>> =
         flow {
             emit(kucoinRepository.fetchCurrencyList())

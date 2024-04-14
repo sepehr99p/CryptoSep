@@ -9,8 +9,9 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.onStart
+import javax.inject.Inject
 
-class MarketListUseCase(private val kucoinRepository: KucoinRepository) {
+class MarketListUseCase @Inject constructor(private val kucoinRepository: KucoinRepository) {
     suspend operator fun invoke(): Flow<ResultState<List<String>>> = flow {
         emit(kucoinRepository.fetchMarketList())
     }.retryWithPolicy(DefaultRetryPolicy())

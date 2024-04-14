@@ -11,8 +11,10 @@ import com.example.cryptosep.domain.entity.SingleTickerEntity
 import com.example.cryptosep.domain.entity.TickerEntity
 import com.example.cryptosep.domain.repository.KucoinRepository
 import com.example.cryptosep.domain.utils.ResultState
+import javax.inject.Inject
 
-class KucoinRepositoryImpl(private val apiService: KucoinApiService) : KucoinRepository {
+class KucoinRepositoryImpl @Inject constructor(private val apiService: KucoinApiService) :
+    KucoinRepository {
     override suspend fun fetchCurrencyList(): ResultState<List<CurrencyEntity>> =
         toResultState(apiService.fetchCurrencyList(), currencyListMapper)
 
