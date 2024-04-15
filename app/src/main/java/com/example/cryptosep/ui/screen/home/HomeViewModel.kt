@@ -40,9 +40,6 @@ class HomeViewModel @Inject constructor(
     private val scope =
         CoroutineScope(Job() + viewModelScope.coroutineContext + SupervisorJob() + ceh)
 
-    private val _currencyList =
-        MutableStateFlow<DataState<List<CurrencyEntity>?>>(DataState.LoadingState(null))
-    val currencyList: StateFlow<DataState<List<CurrencyEntity>?>> = _currencyList
 
     private val _tickerList =
         MutableStateFlow<DataState<List<TickerEntity>?>>(DataState.LoadingState(null))
@@ -53,27 +50,10 @@ class HomeViewModel @Inject constructor(
     val marketList: StateFlow<DataState<List<String>?>> = _marketList
 
     init {
-        fetchCurrencyList()
         fetchMarketList()
         fetchTickerList()
     }
 
-    private fun fetchCurrencyList() {
-        scope.launch {
-            currencyUseCase.invoke().catch {
-                _currencyList.value = DataState.FailedState(data = null)
-            }.collect {
-                when (it) {
-                    is ResultState.Error -> _currencyList.value = DataState.FailedState(data = null)
-                    is ResultState.Loading -> _currencyList.value =
-                        DataState.LoadingState(data = null)
-
-                    is ResultState.Success -> _currencyList.value =
-                        DataState.LoadedState(data = it.data)
-                }
-            }
-        }
-    }
 
     private fun fetchMarketList() {
         scope.launch {

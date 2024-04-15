@@ -1,4 +1,4 @@
-package com.example.cryptosep.ui.screen.home.component.currency
+package com.example.cryptosep.ui.screen.currency.component
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth
