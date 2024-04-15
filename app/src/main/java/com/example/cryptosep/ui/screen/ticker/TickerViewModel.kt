@@ -53,12 +53,16 @@ class TickerViewModel @Inject constructor(
                 _tickerList.value = DataState.FailedState(data = null)
             }.collect {
                 when (it) {
-                    is ResultState.Error -> _tickerList.value = DataState.FailedState(data = null)
-                    is ResultState.Loading -> _tickerList.value =
-                        DataState.LoadingState(data = null)
+                    is ResultState.Error -> {
+                        _tickerList.value = DataState.FailedState(data = null)
+                    }
+                    is ResultState.Loading -> {
+                        _tickerList.value = DataState.LoadingState(data = null)
+                    }
 
-                    is ResultState.Success -> _tickerList.value =
-                        DataState.LoadedState(data = it.data)
+                    is ResultState.Success -> {
+                        _tickerList.value = DataState.LoadedState(data = it.data)
+                    }
                 }
             }
         }

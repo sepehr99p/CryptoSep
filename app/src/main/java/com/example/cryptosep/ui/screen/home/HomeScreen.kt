@@ -6,18 +6,19 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.example.cryptosep.ui.NavigationItem
+import com.example.cryptosep.ui.theme.dimen.corner_8
 import com.example.cryptosep.ui.theme.dimen.padding_8
-import com.example.cryptosep.ui.utils.extentions.roundedShadowBackground
+import com.example.cryptosep.ui.utils.extentions.shadowBackground
 
 @Composable
 fun HomeScreen(navController: NavHostController) {
@@ -42,7 +43,9 @@ private fun HomeItems(modifier: Modifier = Modifier, title: String, callback: ()
     val interactionSource = remember { MutableInteractionSource() }
     Box(modifier = modifier
         .fillMaxWidth()
-        .roundedShadowBackground()
+        .padding(padding_8)
+        .clip(RoundedCornerShape(corner_8))
+        .shadowBackground()
         .padding(padding_8)
         .clickable(
             interactionSource = interactionSource,

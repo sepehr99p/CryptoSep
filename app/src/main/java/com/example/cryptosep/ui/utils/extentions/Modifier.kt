@@ -6,7 +6,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.composed
 import androidx.compose.ui.graphics.Brush
 
-fun Modifier.roundedShadowBackground(): Modifier =
+fun Modifier.shadowBackground(): Modifier =
     composed {
         background(
             brush = Brush.horizontalGradient(
