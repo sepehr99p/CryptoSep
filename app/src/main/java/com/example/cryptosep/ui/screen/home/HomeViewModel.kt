@@ -23,16 +23,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class HomeViewModel @Inject constructor(
-    private val tickerUseCase: TickerListUseCase,
-    private val currencyUseCase: CurrencyListUseCase,
-    private val marketListUseCase: MarketListUseCase
-) : ViewModel() {
-
-
-
-
-
+class HomeViewModel @Inject constructor() : ViewModel() {
 
 
 
