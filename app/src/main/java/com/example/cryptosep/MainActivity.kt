@@ -8,9 +8,8 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.rememberNavController
-import com.example.cryptosep.ui.screen.home.HomeScreen
 import com.example.cryptosep.ui.theme.CryptoSepTheme
-import com.example.cryptosep.ui.utils.AppNavHost
+import com.example.cryptosep.ui.AppNavHost
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

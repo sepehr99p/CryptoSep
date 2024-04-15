@@ -1,4 +1,4 @@
-package com.example.cryptosep.ui
+package com.example.cryptosep
 
 import androidx.multidex.MultiDexApplication
 import dagger.hilt.android.HiltAndroidApp

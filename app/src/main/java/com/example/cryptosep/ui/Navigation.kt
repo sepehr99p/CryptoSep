@@ -1,4 +1,4 @@
-package com.example.cryptosep.ui.utils
+package com.example.cryptosep.ui
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
