@@ -28,66 +28,12 @@ class HomeViewModel @Inject constructor(
     private val currencyUseCase: CurrencyListUseCase,
     private val marketListUseCase: MarketListUseCase
 ) : ViewModel() {
-    companion object {
-        private const val TAG = "HomeViewModel"
-    }
-
-    //    A CEH is optional. It should only be used when you really need to do something with unhandled exceptions.
-    private val ceh = CoroutineExceptionHandler { _, t ->
-        Log.e(TAG, "ceh", t)
-    }
-
-    private val scope =
-        CoroutineScope(Job() + viewModelScope.coroutineContext + SupervisorJob() + ceh)
 
 
-    private val _tickerList =
-        MutableStateFlow<DataState<List<TickerEntity>?>>(DataState.LoadingState(null))
-    val tickerList: StateFlow<DataState<List<TickerEntity>?>> = _tickerList
-
-    private val _marketList =
-        MutableStateFlow<DataState<List<String>?>>(DataState.LoadingState(null))
-    val marketList: StateFlow<DataState<List<String>?>> = _marketList
-
-    init {
-        fetchMarketList()
-        fetchTickerList()
-    }
 
 
-    private fun fetchMarketList() {
-        scope.launch {
-            marketListUseCase.invoke().catch {
-                _marketList.value = DataState.FailedState(data = null)
-            }.collect {
-                when (it) {
-                    is ResultState.Error -> _marketList.value = DataState.FailedState(data = null)
-                    is ResultState.Loading -> _marketList.value =
-                        DataState.LoadingState(data = null)
 
-                    is ResultState.Success -> _marketList.value =
-                        DataState.LoadedState(data = it.data)
-                }
-            }
-        }
-    }
 
-    private fun fetchTickerList() {
-        scope.launch {
-            tickerUseCase.invoke().catch {
-                _tickerList.value = DataState.FailedState(data = null)
-            }.collect {
-                when (it) {
-                    is ResultState.Error -> _tickerList.value = DataState.FailedState(data = null)
-                    is ResultState.Loading -> _tickerList.value =
-                        DataState.LoadingState(data = null)
-
-                    is ResultState.Success -> _tickerList.value =
-                        DataState.LoadedState(data = it.data)
-                }
-            }
-        }
-    }
 
 
 }
