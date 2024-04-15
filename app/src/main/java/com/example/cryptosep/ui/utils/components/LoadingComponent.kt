@@ -1,4 +1,4 @@
-package com.example.cryptosep.ui.screen.home.component.common
+package com.example.cryptosep.ui.utils.components
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
