@@ -17,6 +17,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.cryptosep.domain.entity.TickerEntity
 import com.example.cryptosep.ui.theme.dimen.corner_8
@@ -67,8 +68,14 @@ private fun TickerListItemComponent(modifier: Modifier = Modifier, tickerEntity:
         Box(modifier = Modifier.weight(1f)) {
             Text(
                 modifier = Modifier.align(Alignment.CenterEnd),
-                text = "price change : ${tickerEntity.changePrice}",
-                color = MaterialTheme.colorScheme.onPrimary
+                text = tickerEntity.changePrice,
+                color = if (tickerEntity.changePrice.contains("-")) {
+                    Color.Red
+                } else {
+                    Color.Green
+                },
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis
             )
         }
     }
