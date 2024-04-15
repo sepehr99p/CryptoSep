@@ -40,23 +40,28 @@ class CurrencyViewModel @Inject constructor(
         MutableStateFlow<DataState<List<CurrencyEntity>?>>(DataState.LoadingState(null))
     val currencyList: StateFlow<DataState<List<CurrencyEntity>?>> = _currencyList
 
+    init {
+        fetchCurrencyList()
+    }
+
     private fun fetchCurrencyList() {
         scope.launch {
             currencyUseCase.invoke().catch {
                 _currencyList.value = DataState.FailedState(data = null)
             }.collect {
                 when (it) {
-                    is ResultState.Error -> _currencyList.value = DataState.FailedState(data = null)
-                    is ResultState.Loading -> _currencyList.value =
-                        DataState.LoadingState(data = null)
+                    is ResultState.Error ->
+                        _currencyList.value = DataState.FailedState(data = null)
 
-                    is ResultState.Success -> _currencyList.value =
-                        DataState.LoadedState(data = it.data)
+                    is ResultState.Loading ->
+                        _currencyList.value = DataState.LoadingState(data = null)
+
+                    is ResultState.Success ->
+                        _currencyList.value = DataState.LoadedState(data = it.data)
                 }
             }
         }
     }
-
 
 
 }
