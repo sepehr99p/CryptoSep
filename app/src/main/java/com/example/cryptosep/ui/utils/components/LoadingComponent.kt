@@ -19,7 +19,7 @@ import com.example.cryptosep.ui.theme.dimen.padding_40
 fun LoadingComponent() {
     Box(modifier = Modifier.fillMaxWidth()) {
         CircularProgressIndicator(
-            modifier = Modifier.align(Alignment.BottomCenter).padding(vertical = padding_40),
+            modifier = Modifier.align(Alignment.TopCenter).padding(vertical = padding_40),
             color = MaterialTheme.colorScheme.onPrimary,
             trackColor = MaterialTheme.colorScheme.primary
         )
