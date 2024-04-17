@@ -4,7 +4,7 @@ import com.example.cryptosep.data.model.AllTickersResponse
 import com.example.cryptosep.data.model.BaseResponse
 import com.example.cryptosep.data.model.CurrencyResponse
 import com.example.cryptosep.data.model.SingleTickerResponse
-import com.example.cryptosep.data.model.TickerResponse
+import com.example.cryptosep.domain.entity.CandleEntity
 import com.example.cryptosep.domain.entity.CurrencyEntity
 import com.example.cryptosep.domain.entity.SingleTickerEntity
 import com.example.cryptosep.domain.entity.TickerEntity
@@ -39,5 +39,25 @@ val tickerListMapper =
 
 val marketListMapper = object : MapperCallback<BaseResponse<List<String>>, List<String>> {
     override fun map(value: BaseResponse<List<String>>): List<String> = value.data
+}
+
+val candlesMapper = object : MapperCallback<BaseResponse<List<List<String>>>, List<CandleEntity>> {
+    override fun map(value: BaseResponse<List<List<String>>>): List<CandleEntity> {
+        val result = arrayListOf<CandleEntity>()
+        value.data.forEach {
+            result.add(
+                CandleEntity(
+                    time = it[0],
+                    opening = it[1],
+                    closing = it[2],
+                    highest = it[3],
+                    lowest = it[4],
+                    volume = it[5],
+                    amount = it[6]
+                )
+            )
+        }
+        return result
+    }
 
 }

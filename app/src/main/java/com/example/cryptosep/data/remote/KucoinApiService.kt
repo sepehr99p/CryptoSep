@@ -22,4 +22,10 @@ interface KucoinApiService {
     @GET("/api/v1/markets")
     suspend fun fetchMarketList() : Response<BaseResponse<List<String>>>
 
+    @GET("/api/v1/market/candles")
+    suspend fun fetchCandles(
+        @Query("type") type : String,
+        @Query("symbol") symbol : String
+    ) : Response<BaseResponse<List<List<String>>>>
+
 }

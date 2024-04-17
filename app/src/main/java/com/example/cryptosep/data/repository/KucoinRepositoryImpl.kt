@@ -1,11 +1,13 @@
 package com.example.cryptosep.data.repository
 
+import com.example.cryptosep.data.mapper.candlesMapper
 import com.example.cryptosep.data.mapper.currencyListMapper
 import com.example.cryptosep.data.mapper.marketListMapper
 import com.example.cryptosep.data.mapper.tickerListMapper
 import com.example.cryptosep.data.mapper.tickerMapper
 import com.example.cryptosep.data.mapper.toResultState
 import com.example.cryptosep.data.remote.KucoinApiService
+import com.example.cryptosep.domain.entity.CandleEntity
 import com.example.cryptosep.domain.entity.CurrencyEntity
 import com.example.cryptosep.domain.entity.SingleTickerEntity
 import com.example.cryptosep.domain.entity.TickerEntity
@@ -26,4 +28,10 @@ class KucoinRepositoryImpl @Inject constructor(private val apiService: KucoinApi
 
     override suspend fun fetchMarketList(): ResultState<List<String>> =
         toResultState(apiService.fetchMarketList(), marketListMapper)
+
+    override suspend fun fetchCandles(
+        interval: String,
+        symbol: String
+    ): ResultState<List<CandleEntity>> =
+        toResultState(apiService.fetchCandles(interval, symbol), candlesMapper)
 }

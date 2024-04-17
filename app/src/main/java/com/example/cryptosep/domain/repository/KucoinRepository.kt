@@ -1,5 +1,6 @@
 package com.example.cryptosep.domain.repository
 
+import com.example.cryptosep.domain.entity.CandleEntity
 import com.example.cryptosep.domain.entity.CurrencyEntity
 import com.example.cryptosep.domain.entity.SingleTickerEntity
 import com.example.cryptosep.domain.entity.TickerEntity
@@ -14,5 +15,7 @@ interface KucoinRepository {
     suspend fun fetchAllTickers() : ResultState<List<TickerEntity>>
 
     suspend fun fetchMarketList() : ResultState<List<String>>
+
+    suspend fun fetchCandles(interval : String, symbol: String) : ResultState<List<CandleEntity>>
 
 }
