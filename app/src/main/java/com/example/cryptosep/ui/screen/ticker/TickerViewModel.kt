@@ -44,7 +44,7 @@ class TickerViewModel @Inject constructor(
     val tickerList: StateFlow<DataState<List<TickerEntity>?>> = _tickerList
 
     private val _ticker =
-        MutableStateFlow<DataState<SingleTickerEntity?>>(DataState.LoadingState(null))
+        MutableStateFlow<DataState<SingleTickerEntity?>>(DataState.FailedState(null))
     val ticker: StateFlow<DataState<SingleTickerEntity?>> = _ticker
 
     init {
