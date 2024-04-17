@@ -3,6 +3,7 @@ package com.example.cryptosep.ui.screen.ticker
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.cryptosep.domain.entity.SingleTickerEntity
 import com.example.cryptosep.domain.entity.TickerEntity
 import com.example.cryptosep.domain.usecase.FetchTickerUseCase
 import com.example.cryptosep.domain.usecase.TickerListUseCase
@@ -42,8 +43,26 @@ class TickerViewModel @Inject constructor(
         MutableStateFlow<DataState<List<TickerEntity>?>>(DataState.LoadingState(null))
     val tickerList: StateFlow<DataState<List<TickerEntity>?>> = _tickerList
 
+    private val _ticker =
+        MutableStateFlow<DataState<SingleTickerEntity?>>(DataState.LoadingState(null))
+    val ticker: StateFlow<DataState<SingleTickerEntity?>> = _ticker
+
     init {
         fetchTickerList()
+    }
+
+    fun getTicker(symbol: String) {
+        scope.launch {
+            tickerUseCase.invoke(symbol).catch {
+
+            }.collect {
+                when (it) {
+                    is ResultState.Error -> _ticker.value = DataState.FailedState(null)
+                    is ResultState.Loading -> _ticker.value = DataState.LoadingState(null)
+                    is ResultState.Success -> _ticker.value = DataState.LoadedState(data = it.data)
+                }
+            }
+        }
     }
 
 
@@ -56,6 +75,7 @@ class TickerViewModel @Inject constructor(
                     is ResultState.Error -> {
                         _tickerList.value = DataState.FailedState(data = null)
                     }
+
                     is ResultState.Loading -> {
                         _tickerList.value = DataState.LoadingState(data = null)
                     }

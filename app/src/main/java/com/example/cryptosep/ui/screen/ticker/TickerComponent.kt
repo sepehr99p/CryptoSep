@@ -19,6 +19,7 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
+import com.example.cryptosep.domain.entity.SingleTickerEntity
 import com.example.cryptosep.domain.entity.TickerEntity
 import com.example.cryptosep.ui.theme.dimen.corner_8
 import com.example.cryptosep.ui.theme.dimen.padding_4
@@ -84,6 +85,27 @@ private fun TickerListItemComponent(modifier: Modifier = Modifier, tickerEntity:
 val mockTickerEntity = TickerEntity(
     "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "",
 )
+
+@Composable
+fun SingleTickerComponent(modifier: Modifier = Modifier, singleTickerEntity: SingleTickerEntity) {
+    Column(
+        modifier = modifier
+            .fillMaxWidth()
+            .padding(padding_8)
+            .clip(RoundedCornerShape(corner_8))
+            .shadowBackground()
+            .padding(horizontal = padding_4),
+    ) {
+        Text(text = singleTickerEntity.price, color = MaterialTheme.colorScheme.onPrimary)
+    }
+
+}
+
+@Preview
+@Composable
+fun SingleTickerComponentPreview() {
+//    SingleTickerComponent()
+}
 
 @Preview
 @Composable
