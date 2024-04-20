@@ -1,11 +1,15 @@
 package com.example.cryptosep.ui.screen.ticker
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Close
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
 import androidx.compose.material3.SearchBar
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -49,7 +53,12 @@ fun TickerScreen() {
                 onSearch = { viewModel.getTicker(searchTicker.value) },
                 active = true,
                 onActiveChange = {
-
+//                    showSearchBar.value = it
+                },
+                trailingIcon = {
+                    Icon(modifier = Modifier.clickable {
+                        showSearchBar.value = false
+                    }, imageVector = Icons.Default.Close, contentDescription = null)
                 }
             ) {
                 when (ticker.value) {
