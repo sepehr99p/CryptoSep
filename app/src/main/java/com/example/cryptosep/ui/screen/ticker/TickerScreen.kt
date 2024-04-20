@@ -1,6 +1,7 @@
 package com.example.cryptosep.ui.screen.ticker
 
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -40,6 +41,7 @@ fun TickerScreen() {
 
     Column {
         if (showSearchBar.value) {
+            val interactionSource = remember { MutableInteractionSource() }
             SearchBar(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -55,10 +57,15 @@ fun TickerScreen() {
                 onActiveChange = {
 //                    showSearchBar.value = it
                 },
+                interactionSource = interactionSource,
                 trailingIcon = {
-                    Icon(modifier = Modifier.clickable {
+                    Icon(modifier = Modifier.clickable(
+                        interactionSource = interactionSource,
+                        indication = null
+                    ) {
                         showSearchBar.value = false
-                    }, imageVector = Icons.Default.Close, contentDescription = null)
+                    }, imageVector = Icons.Default.Close, contentDescription = null
+                    )
                 }
             ) {
                 when (ticker.value) {
