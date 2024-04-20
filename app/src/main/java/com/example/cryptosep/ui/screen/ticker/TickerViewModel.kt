@@ -54,7 +54,7 @@ class TickerViewModel @Inject constructor(
     fun getTicker(symbol: String) {
         scope.launch {
             tickerUseCase.invoke(symbol).catch {
-
+                _ticker.value = DataState.FailedState(null)
             }.collect {
                 when (it) {
                     is ResultState.Error -> _ticker.value = DataState.FailedState(null)

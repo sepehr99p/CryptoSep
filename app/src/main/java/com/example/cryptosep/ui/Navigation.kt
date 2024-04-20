@@ -8,20 +8,24 @@ import androidx.navigation.compose.composable
 import com.example.cryptosep.ui.screen.currency.CurrencyScreen
 import com.example.cryptosep.ui.screen.home.HomeScreen
 import com.example.cryptosep.ui.screen.market.MarketScreen
+import com.example.cryptosep.ui.screen.setting.SettingsScreen
 import com.example.cryptosep.ui.screen.ticker.TickerScreen
 
 enum class Screen {
     HOME,
     CURRENCY,
     TICKERS,
-    MARKET
+    MARKET,
+    SETTINGS
 }
 
 sealed class NavigationItem(val route: String) {
-    object Home : NavigationItem(Screen.HOME.name)
-    object Currency : NavigationItem(Screen.CURRENCY.name)
-    object Tickers : NavigationItem(Screen.TICKERS.name)
-    object Market : NavigationItem(Screen.MARKET.name)
+    data object Home : NavigationItem(Screen.HOME.name)
+    data object Currency : NavigationItem(Screen.CURRENCY.name)
+    data object Tickers : NavigationItem(Screen.TICKERS.name)
+    data object Market : NavigationItem(Screen.MARKET.name)
+
+    data object Settings : NavigationItem(Screen.SETTINGS.name)
 }
 
 
@@ -48,5 +52,9 @@ fun AppNavHost(
         composable(NavigationItem.Market.route) {
             MarketScreen()
         }
+        composable(NavigationItem.Settings.route) {
+            SettingsScreen()
+        }
+
     }
 }

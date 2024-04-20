@@ -91,6 +91,6 @@ fun TickerScreen() {
 
 @Preview
 @Composable
-fun TickerScreenPreview() {
+private fun TickerScreenPreview() {
     TickerScreen()
 }
