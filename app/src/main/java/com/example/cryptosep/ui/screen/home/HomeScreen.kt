@@ -33,6 +33,9 @@ fun HomeScreen(navController: NavHostController) {
         HomeItems(title = "Markets") {
             navController.navigate(NavigationItem.Market.route)
         }
+        HomeItems(title = "Settings") {
+            navController.navigate(NavigationItem.Settings.route)
+        }
     }
 
 }
