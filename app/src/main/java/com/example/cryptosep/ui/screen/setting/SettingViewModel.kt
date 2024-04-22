@@ -6,6 +6,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 //@HiltViewModel
 class SettingsViewModel : ViewModel() {
 
+    val exchanges : List<String> = listOf("testing","kucoin")
 
 
 }
