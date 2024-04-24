@@ -80,7 +80,7 @@ fun TickerScreen() {
             showSearchBar.value = showSearchBar.value.not()
         }
         when (tickerListState.value) {
-            is DataState.FailedState -> LoadingComponent() // todo : impl later
+            is DataState.FailedState -> ErrorComponent("ticker list error")
             is DataState.LoadedState -> TickerListComponent(tickerList = tickerListState.value.data!!)
             is DataState.LoadingState -> LoadingComponent()
         }
