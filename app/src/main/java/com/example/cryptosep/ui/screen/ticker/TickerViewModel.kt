@@ -3,8 +3,10 @@ package com.example.cryptosep.ui.screen.ticker
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.cryptosep.domain.entity.CandleEntity
 import com.example.cryptosep.domain.entity.SingleTickerEntity
 import com.example.cryptosep.domain.entity.TickerEntity
+import com.example.cryptosep.domain.usecase.CandlesUseCase
 import com.example.cryptosep.domain.usecase.FetchTickerUseCase
 import com.example.cryptosep.domain.usecase.TickerListUseCase
 import com.example.cryptosep.domain.utils.ResultState
@@ -23,7 +25,8 @@ import javax.inject.Inject
 @HiltViewModel
 class TickerViewModel @Inject constructor(
     private val tickerUseCase: FetchTickerUseCase,
-    private val tickerListUseCase: TickerListUseCase
+    private val tickerListUseCase: TickerListUseCase,
+    private val candlesUseCase: CandlesUseCase
 ) : ViewModel() {
 
     companion object {
@@ -46,6 +49,10 @@ class TickerViewModel @Inject constructor(
     private val _ticker =
         MutableStateFlow<DataState<SingleTickerEntity?>>(DataState.FailedState(null))
     val ticker: StateFlow<DataState<SingleTickerEntity?>> = _ticker
+
+    private val _Klines =
+        MutableStateFlow<DataState<List<CandleEntity>?>>(DataState.LoadingState(null))
+    val Klines : StateFlow<DataState<List<CandleEntity>?>> = _Klines
 
     init {
         fetchTickerList()
@@ -87,6 +94,22 @@ class TickerViewModel @Inject constructor(
             }
         }
     }
+
+    fun fetchCandles(interval : String = "1min", symbol: String) {
+        scope.launch {
+            candlesUseCase.invoke(interval,symbol).catch {
+                _Klines.value = DataState.FailedState(data = null)
+            }.collect {
+                when(it) {
+                    is ResultState.Error -> _Klines.value = DataState.FailedState(data = null)
+                    is ResultState.Loading -> _Klines.value = DataState.LoadingState(data = null)
+                    is ResultState.Success -> _Klines.value = DataState.LoadedState(data = it.data)
+                }
+            }
+
+        }
+    }
+
 
 
 }

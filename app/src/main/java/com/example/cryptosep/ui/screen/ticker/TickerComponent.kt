@@ -35,23 +35,38 @@ import com.example.cryptosep.ui.theme.dimen.padding_8
 import com.example.cryptosep.ui.utils.extentions.shadowBackground
 
 @Composable
-fun TickerListComponent(modifier: Modifier = Modifier, tickerList: List<TickerEntity>) {
+fun TickerListComponent(
+    modifier: Modifier = Modifier,
+    tickerList: List<TickerEntity>,
+    onTickerClicked: ((symbol : String) -> Unit)? = null
+) {
     LazyColumn(modifier = modifier) {
         items(tickerList) {
-            TickerListItemComponent(tickerEntity = it)
+            TickerListItemComponent(tickerEntity = it, onTickerClicked = onTickerClicked)
         }
     }
 }
 
 @Composable
-private fun TickerListItemComponent(modifier: Modifier = Modifier, tickerEntity: TickerEntity) {
+private fun TickerListItemComponent(
+    modifier: Modifier = Modifier,
+    tickerEntity: TickerEntity,
+    onTickerClicked: ((symbol : String) -> Unit)? = null
+) {
+    val interactionSource = remember { MutableInteractionSource() }
     Row(
         modifier = modifier
             .fillMaxWidth()
             .padding(padding_8)
             .clip(RoundedCornerShape(corner_8))
             .shadowBackground()
-            .padding(horizontal = padding_4),
+            .padding(horizontal = padding_4)
+            .clickable(
+                interactionSource = interactionSource,
+                indication = null
+            ) {
+                onTickerClicked?.invoke(tickerEntity.symbol)
+            },
         verticalAlignment = Alignment.CenterVertically
     ) {
         Text(text = tickerEntity.symbol, color = MaterialTheme.colorScheme.onPrimary)

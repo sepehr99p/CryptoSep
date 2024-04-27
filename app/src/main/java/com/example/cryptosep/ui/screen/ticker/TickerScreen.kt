@@ -38,6 +38,7 @@ import java.util.Locale
 fun TickerScreen() {
     val viewModel = hiltViewModel<TickerViewModel>()
     val tickerListState = viewModel.tickerList.collectAsState()
+    val klinesState = viewModel.Klines.collectAsState()
     val ticker = viewModel.ticker.collectAsState()
     val searchTicker = remember { mutableStateOf("") }
     val showSearchBar = remember { mutableStateOf(false) }
@@ -62,12 +63,13 @@ fun TickerScreen() {
                 },
                 interactionSource = interactionSource,
                 trailingIcon = {
-                    Icon(modifier = Modifier.clickable(
-                        interactionSource = interactionSource,
-                        indication = null
-                    ) {
-                        showSearchBar.value = false
-                    }, imageVector = Icons.Default.Close, contentDescription = null
+                    Icon(
+                        modifier = Modifier.clickable(
+                            interactionSource = interactionSource,
+                            indication = null
+                        ) {
+                            showSearchBar.value = false
+                        }, imageVector = Icons.Default.Close, contentDescription = null
                     )
                 }
             ) {
@@ -84,7 +86,9 @@ fun TickerScreen() {
         }
         when (tickerListState.value) {
             is DataState.FailedState -> ErrorComponent("ticker list error")
-            is DataState.LoadedState -> TickerListComponent(tickerList = tickerListState.value.data!!)
+            is DataState.LoadedState -> TickerListComponent(tickerList = tickerListState.value.data!!) {
+                viewModel.fetchCandles(symbol = it)
+            }
             is DataState.LoadingState -> LoadingComponent()
         }
     }

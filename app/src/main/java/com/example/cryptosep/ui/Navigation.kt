@@ -16,7 +16,7 @@ enum class Screen {
     CURRENCY,
     TICKERS,
     MARKET,
-    SETTINGS
+    SETTINGS,
 }
 
 sealed class NavigationItem(val route: String) {
@@ -55,6 +55,5 @@ fun AppNavHost(
         composable(NavigationItem.Settings.route) {
             SettingsScreen()
         }
-
     }
 }
