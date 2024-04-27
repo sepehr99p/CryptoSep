@@ -1,18 +1,15 @@
 package com.example.cryptosep.ui.screen.ticker
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.SearchBar
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -21,24 +18,21 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.text.toUpperCase
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.cryptosep.ui.theme.dimen.corner_8
-import com.example.cryptosep.ui.theme.dimen.padding_16
 import com.example.cryptosep.ui.theme.dimen.padding_8
 import com.example.cryptosep.ui.utils.DataState
 import com.example.cryptosep.ui.utils.components.ErrorComponent
 import com.example.cryptosep.ui.utils.components.LoadingComponent
-import java.util.Locale
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun TickerScreen() {
+fun TickerScreen(
+    onTickerClicked: (symbol: String) -> Unit
+) {
     val viewModel = hiltViewModel<TickerViewModel>()
     val tickerListState = viewModel.tickerList.collectAsState()
-    val klinesState = viewModel.Klines.collectAsState()
     val ticker = viewModel.ticker.collectAsState()
     val searchTicker = remember { mutableStateOf("") }
     val showSearchBar = remember { mutableStateOf(false) }
@@ -87,8 +81,9 @@ fun TickerScreen() {
         when (tickerListState.value) {
             is DataState.FailedState -> ErrorComponent("ticker list error")
             is DataState.LoadedState -> TickerListComponent(tickerList = tickerListState.value.data!!) {
-                viewModel.fetchCandles(symbol = it)
+                onTickerClicked.invoke(it)
             }
+
             is DataState.LoadingState -> LoadingComponent()
         }
     }
@@ -99,5 +94,5 @@ fun TickerScreen() {
 @Preview
 @Composable
 private fun TickerScreenPreview() {
-    TickerScreen()
+//    TickerScreen()
 }

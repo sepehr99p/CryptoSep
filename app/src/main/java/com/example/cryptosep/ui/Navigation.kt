@@ -5,6 +5,7 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import com.example.cryptosep.ui.screen.candles.CandlesScreen
 import com.example.cryptosep.ui.screen.currency.CurrencyScreen
 import com.example.cryptosep.ui.screen.home.HomeScreen
 import com.example.cryptosep.ui.screen.market.MarketScreen
@@ -17,6 +18,7 @@ enum class Screen {
     TICKERS,
     MARKET,
     SETTINGS,
+    CANDLES
 }
 
 sealed class NavigationItem(val route: String) {
@@ -26,6 +28,7 @@ sealed class NavigationItem(val route: String) {
     data object Market : NavigationItem(Screen.MARKET.name)
 
     data object Settings : NavigationItem(Screen.SETTINGS.name)
+    data object Candles : NavigationItem(Screen.CANDLES.name)
 }
 
 
@@ -47,13 +50,19 @@ fun AppNavHost(
             CurrencyScreen(navController)
         }
         composable(NavigationItem.Tickers.route) {
-            TickerScreen()
+            TickerScreen{
+                navController.navigate("${NavigationItem.Candles.route}/$it")
+            }
         }
         composable(NavigationItem.Market.route) {
             MarketScreen()
         }
         composable(NavigationItem.Settings.route) {
             SettingsScreen()
+        }
+        composable("${NavigationItem.Candles.route}/{symbol}") {
+            val symbol = it.arguments?.getString("symbol")
+            CandlesScreen(symbol)
         }
     }
 }

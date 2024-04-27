@@ -25,8 +25,7 @@ import javax.inject.Inject
 @HiltViewModel
 class TickerViewModel @Inject constructor(
     private val tickerUseCase: FetchTickerUseCase,
-    private val tickerListUseCase: TickerListUseCase,
-    private val candlesUseCase: CandlesUseCase
+    private val tickerListUseCase: TickerListUseCase
 ) : ViewModel() {
 
     companion object {
@@ -50,9 +49,7 @@ class TickerViewModel @Inject constructor(
         MutableStateFlow<DataState<SingleTickerEntity?>>(DataState.FailedState(null))
     val ticker: StateFlow<DataState<SingleTickerEntity?>> = _ticker
 
-    private val _Klines =
-        MutableStateFlow<DataState<List<CandleEntity>?>>(DataState.LoadingState(null))
-    val Klines : StateFlow<DataState<List<CandleEntity>?>> = _Klines
+
 
     init {
         fetchTickerList()
@@ -95,20 +92,6 @@ class TickerViewModel @Inject constructor(
         }
     }
 
-    fun fetchCandles(interval : String = "1min", symbol: String) {
-        scope.launch {
-            candlesUseCase.invoke(interval,symbol).catch {
-                _Klines.value = DataState.FailedState(data = null)
-            }.collect {
-                when(it) {
-                    is ResultState.Error -> _Klines.value = DataState.FailedState(data = null)
-                    is ResultState.Loading -> _Klines.value = DataState.LoadingState(data = null)
-                    is ResultState.Success -> _Klines.value = DataState.LoadedState(data = it.data)
-                }
-            }
-
-        }
-    }
 
 
 
