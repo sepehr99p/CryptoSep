@@ -1,5 +1,6 @@
 package com.example.cryptosep.ui.screen.ticker
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Box
@@ -115,6 +116,15 @@ fun TickerScreenTopBar(callback: () -> Unit) {
         modifier = Modifier
             .fillMaxWidth()
             .padding(padding_8)
+            .clip(shape = RoundedCornerShape(corner_8))
+            .background(MaterialTheme.colorScheme.primaryContainer)
+            .padding(padding_8)
+            .clickable(
+                interactionSource = interactionSource,
+                indication = null
+            ) {
+                callback.invoke()
+            }
     ) {
         Text(
             modifier = Modifier.align(Alignment.CenterStart),
@@ -123,13 +133,7 @@ fun TickerScreenTopBar(callback: () -> Unit) {
         )
         Icon(
             modifier = Modifier
-                .align(Alignment.CenterEnd)
-                .clickable(
-                    interactionSource = interactionSource,
-                    indication = null
-                ) {
-                    callback.invoke()
-                },
+                .align(Alignment.CenterEnd),
             painter = rememberVectorPainter(image = Icons.Default.Search),
             contentDescription = null
         )
