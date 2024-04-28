@@ -8,6 +8,6 @@ plugins {
 buildscript {
     repositories {
         mavenCentral()
-        maven(url = "https://jitpack.io")
+//        maven(url = "https://jitpack.io")
     }
 }

@@ -99,7 +99,7 @@ dependencies {
     testImplementation("com.google.dagger:hilt-android-testing:2.51.1")
     kaptTest("com.google.dagger:hilt-compiler:2.51.1")
 
-    implementation("com.github.PhilJay:MPAndroidChart:v3.1.0")
+//    implementation("com.github.PhilJay:MPAndroidChart:v3.1.0")
 
 
 //    implementation("com.google.dagger:hilt-android-gradle-plugin:2.50")
