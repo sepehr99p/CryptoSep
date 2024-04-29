@@ -27,7 +27,6 @@ import com.example.cryptosep.ui.utils.components.LoadingComponent
 
 @Composable
 fun CandlesScreen(
-    symbol: String?,
     viewModel: CandlesViewModel = hiltViewModel()
 ) {
     val candlesState = viewModel.candles.collectAsState()

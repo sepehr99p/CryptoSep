@@ -61,8 +61,7 @@ fun AppNavHost(
             SettingsScreen()
         }
         composable("${NavigationItem.Candles.route}/{symbol}") {
-            val symbol = it.arguments?.getString("symbol")
-            CandlesScreen(symbol)
+            CandlesScreen()
         }
     }
 }
