@@ -1,7 +1,6 @@
 package com.example.cryptosep.domain.entity
 
 data class TickerEntity(
-
     val symbol: String,
     val symbolName: String,
     val buy: String,
@@ -20,5 +19,4 @@ data class TickerEntity(
     val makerFeeRate: String,
     val takerCoefficient: String,
     val makerCoefficient: String
-
 )
