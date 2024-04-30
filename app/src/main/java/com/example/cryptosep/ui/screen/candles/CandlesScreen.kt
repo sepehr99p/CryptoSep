@@ -3,11 +3,8 @@ package com.example.cryptosep.ui.screen.candles
 import android.annotation.SuppressLint
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -35,13 +32,9 @@ import com.patrykandpatrick.vico.compose.cartesian.marker.rememberDefaultCartesi
 import com.patrykandpatrick.vico.compose.cartesian.rememberCartesianChart
 import com.patrykandpatrick.vico.core.cartesian.HorizontalLayout
 import com.patrykandpatrick.vico.core.cartesian.axis.AxisItemPlacer
-import com.patrykandpatrick.vico.core.cartesian.data.CartesianChartModel
 import com.patrykandpatrick.vico.core.cartesian.data.CartesianChartModelProducer
-import com.patrykandpatrick.vico.core.cartesian.data.CartesianLayerModel
-import com.patrykandpatrick.vico.core.cartesian.data.RandomCartesianModelGenerator
-import com.patrykandpatrick.vico.core.cartesian.layer.CartesianLayer
+import com.patrykandpatrick.vico.core.cartesian.data.candlestickSeries
 import com.patrykandpatrick.vico.core.common.component.TextComponent
-import com.patrykandpatrick.vico.core.common.data.ExtraStore
 
 @Composable
 fun CandlesScreen(
@@ -65,21 +58,18 @@ fun CandlesScreen(
 
 
 @Composable
-private fun ComposeChart10(
+private fun CandleChart(
     modelProducer: CartesianChartModelProducer,
     modifier: Modifier,
 ) {
-    val marker2 = rememberDefaultCartesianMarker(label = TextComponent.build())
-//    val marker = rememberMarker(showIndicator = false)
+    val marker = rememberDefaultCartesianMarker(label = TextComponent.build())
     CartesianChartHost(
         chart = rememberCartesianChart(
             rememberCandlestickCartesianLayer(),
             startAxis = rememberStartAxis(),
-            bottomAxis =
-            rememberBottomAxis(
+            bottomAxis = rememberBottomAxis(
                 guideline = null,
-                itemPlacer =
-                remember {
+                itemPlacer = remember {
                     AxisItemPlacer.Horizontal.default(
                         spacing = 3,
                         addExtremeLabelPadding = true
@@ -88,7 +78,7 @@ private fun ComposeChart10(
             ),
         ),
         modelProducer = modelProducer,
-        marker = marker2,
+        marker = marker,
         modifier = modifier,
         horizontalLayout = HorizontalLayout.fullWidth(),
     )
@@ -99,24 +89,16 @@ private fun ComposeChart10(
 @Composable
 fun CandlesList(modifier: Modifier = Modifier, candles: List<CandleEntity>) {
     val modelProducer = remember { CartesianChartModelProducer.build() }
-    candles.forEach {
-        modelProducer.tryRunTransaction {
-            add(RandomCartesianModelGenerator.getRandomCandlestickLayerModelPartial())
-        }
+    modelProducer.tryRunTransaction {
+        candlestickSeries(
+            x = candles.map { it.time.toInt() },
+            opening = candles.map { it.opening.toFloat() },
+            closing = candles.map { it.closing.toFloat() },
+            low = candles.map { it.lowest.toFloat() },
+            high = candles.map { it.highest.toFloat() },
+        )
     }
-    ComposeChart10(modifier = Modifier, modelProducer = modelProducer)
-
-//    LazyColumn(
-//        modifier = modifier
-//            .fillMaxWidth()
-//            .padding(padding_8)
-//    ) {
-//        candles.forEach {
-//            item {
-//                CandleListItem(candle = it)
-//            }
-//        }
-//    }
+    CandleChart(modifier = modifier, modelProducer = modelProducer)
 }
 
 @Composable
