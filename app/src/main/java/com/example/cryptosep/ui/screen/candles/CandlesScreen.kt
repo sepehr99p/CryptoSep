@@ -91,7 +91,7 @@ fun CandlesList(modifier: Modifier = Modifier, candles: List<CandleEntity>) {
     val modelProducer = remember { CartesianChartModelProducer.build() }
     modelProducer.tryRunTransaction {
         candlestickSeries(
-            x = candles.map { it.time.toInt() },
+            x = candles.map { it.time.toInt() }, // todo : convert it later
             opening = candles.map { it.opening.toFloat() },
             closing = candles.map { it.closing.toFloat() },
             low = candles.map { it.lowest.toFloat() },
