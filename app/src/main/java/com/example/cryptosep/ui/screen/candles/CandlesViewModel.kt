@@ -47,7 +47,7 @@ class CandlesViewModel @Inject constructor(
         fetchCandles(symbol = navigationParam ?: "")
     }
 
-    fun fetchCandles(interval: String = "1min", symbol: String) {
+    fun fetchCandles(interval: String = "1day", symbol: String) {
         scope.launch {
             candlesUseCase.invoke(interval = interval, symbol = symbol).catch {
                 _candles.value = DataState.FailedState(data = null)
