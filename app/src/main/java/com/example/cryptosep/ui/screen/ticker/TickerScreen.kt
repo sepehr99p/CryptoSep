@@ -69,15 +69,18 @@ fun TickerScreen(
             ) {
                 when (ticker.value) {
                     is DataState.FailedState -> ErrorComponent(" :/ ")
-                    is DataState.LoadedState -> SingleTickerComponent(singleTickerEntity = ticker.value.data!!)
+                    is DataState.LoadedState -> SingleTickerComponent(
+                        singleTickerEntity = ticker.value.data!!,
+                        onTickerClicked = { onTickerClicked.invoke(searchTicker.value) })
+
                     is DataState.LoadingState -> LoadingComponent()
                 }
 
             }
         }
-        TickerScreenTopBar {
-            showSearchBar.value = showSearchBar.value.not()
-        }
+        TickerScreenTopBar(
+            callback = { showSearchBar.value = showSearchBar.value.not() }
+        )
         when (tickerListState.value) {
             is DataState.FailedState -> ErrorComponent("ticker list error")
             is DataState.LoadedState -> TickerListComponent(tickerList = tickerListState.value.data!!) {

@@ -38,7 +38,7 @@ import com.example.cryptosep.ui.utils.extentions.shadowBackground
 fun TickerListComponent(
     modifier: Modifier = Modifier,
     tickerList: List<TickerEntity>,
-    onTickerClicked: ((symbol : String) -> Unit)? = null
+    onTickerClicked: ((symbol: String) -> Unit)? = null
 ) {
     LazyColumn(modifier = modifier) {
         items(tickerList) {
@@ -51,7 +51,7 @@ fun TickerListComponent(
 private fun TickerListItemComponent(
     modifier: Modifier = Modifier,
     tickerEntity: TickerEntity,
-    onTickerClicked: ((symbol : String) -> Unit)? = null
+    onTickerClicked: ((symbol: String) -> Unit)? = null
 ) {
     val interactionSource = remember { MutableInteractionSource() }
     Row(
@@ -110,14 +110,21 @@ val mockTickerEntity = TickerEntity(
 )
 
 @Composable
-fun SingleTickerComponent(modifier: Modifier = Modifier, singleTickerEntity: SingleTickerEntity) {
+fun SingleTickerComponent(
+    modifier: Modifier = Modifier,
+    singleTickerEntity: SingleTickerEntity,
+    onTickerClicked: (() -> Unit)? = null
+) {
     Column(
         modifier = modifier
             .fillMaxWidth()
             .padding(padding_8)
             .clip(RoundedCornerShape(corner_8))
             .shadowBackground()
-            .padding(horizontal = padding_4),
+            .padding(horizontal = padding_4)
+            .clickable {
+                onTickerClicked?.invoke()
+            },
     ) {
         Text(text = singleTickerEntity.price, color = MaterialTheme.colorScheme.onPrimary)
     }
@@ -158,7 +165,9 @@ fun TickerScreenTopBar(callback: () -> Unit) {
 @Preview
 @Composable
 fun TickerScreenTopBarPreview() {
-    TickerScreenTopBar() {}
+    TickerScreenTopBar(
+        {}
+    )
 }
 
 @Preview
