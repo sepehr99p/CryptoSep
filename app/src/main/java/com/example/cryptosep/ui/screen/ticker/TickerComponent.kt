@@ -54,59 +54,115 @@ private fun TickerListItemComponent(
     onTickerClicked: ((symbol: String) -> Unit)? = null
 ) {
     val interactionSource = remember { MutableInteractionSource() }
-    Row(
+    Column(
         modifier = modifier
-            .fillMaxWidth()
-            .padding(padding_8)
-            .clip(RoundedCornerShape(corner_8))
-            .shadowBackground()
-            .padding(horizontal = padding_4)
-            .clickable(
-                interactionSource = interactionSource,
-                indication = null
-            ) {
-                onTickerClicked?.invoke(tickerEntity.symbol)
-            },
-        verticalAlignment = Alignment.CenterVertically
     ) {
-        Text(text = tickerEntity.symbol, color = MaterialTheme.colorScheme.onPrimary)
-        Column(
-            modifier = Modifier.padding(horizontal = padding_8)
-        ) {
-            Text(
-                text = tickerEntity.high,
-                color = Color.Green,
-                style = TextStyle().copy(fontWeight = FontWeight.W600)
-            )
-            Text(
-                text = tickerEntity.last,
-                color = MaterialTheme.colorScheme.onPrimary,
-                style = TextStyle().copy(fontWeight = FontWeight.W600)
-            )
-            Text(
-                text = tickerEntity.low,
-                color = Color.Red,
-                style = TextStyle().copy(fontWeight = FontWeight.W600)
-            )
-        }
-        Box(modifier = Modifier.weight(1f)) {
-            Text(
-                modifier = Modifier.align(Alignment.CenterEnd),
-                text = tickerEntity.changePrice,
-                color = if (tickerEntity.changePrice.contains("-")) {
-                    Color.Red
-                } else {
-                    Color.Green
+        Text(
+            modifier = Modifier.padding(horizontal = padding_8, vertical = padding_4),
+            text = tickerEntity.symbol,
+            color = MaterialTheme.colorScheme.onPrimary
+        )
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = padding_8)
+                .clip(RoundedCornerShape(corner_8))
+                .shadowBackground()
+                .padding(horizontal = padding_4)
+                .clickable(
+                    interactionSource = interactionSource,
+                    indication = null
+                ) {
+                    onTickerClicked?.invoke(tickerEntity.symbol)
                 },
-                maxLines = 1,
-                overflow = TextOverflow.Ellipsis
-            )
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Row(
+                modifier = Modifier.padding(horizontal = padding_8).weight(1f)
+            ) {
+                TickerPriceItemComponent(
+                    modifier = Modifier.weight(1f),
+                    value = tickerEntity.high,
+                    title = "High",
+                    color = Color.Green
+                )
+                TickerPriceItemComponent(
+                    modifier = Modifier.weight(1f),
+                    value = tickerEntity.last,
+                    title = "Last"
+                )
+                TickerPriceItemComponent(
+                    modifier = Modifier.weight(1f),
+                    value = tickerEntity.low,
+                    title = "Low",
+                    color = Color.Red
+                )
+            }
+            Box(modifier = Modifier) {
+                Text(
+                    modifier = Modifier.align(Alignment.CenterEnd),
+                    text = tickerEntity.changePrice,
+                    color = if (tickerEntity.changePrice.contains("-")) {
+                        Color.Red
+                    } else {
+                        Color.Green
+                    },
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis
+                )
+            }
         }
     }
 }
 
+
+@Composable
+fun TickerPriceItemComponent(
+    modifier: Modifier = Modifier,
+    color: Color = MaterialTheme.colorScheme.onPrimary,
+    value: String,
+    title: String
+) {
+    Column(
+        modifier = modifier,
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        Text(
+            modifier = Modifier.padding(horizontal = padding_4),
+            text = title,
+            color = MaterialTheme.colorScheme.onPrimary.copy(alpha = 0.7f),
+            style = TextStyle().copy(fontWeight = FontWeight.W400)
+        )
+        Text(
+            modifier = Modifier.padding(horizontal = padding_4),
+            text = value,
+            color = color,
+            style = TextStyle().copy(fontWeight = FontWeight.W600),
+            maxLines = 1,
+            overflow = TextOverflow.Ellipsis
+        )
+    }
+}
+
 val mockTickerEntity = TickerEntity(
-    "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "",
+    "symbol",
+    "asdfjasdf",
+    "sdffds",
+    "asdfas",
+    "",
+    "",
+    "234",
+    "1234134",
+    "1234",
+    "1234",
+    "",
+    "",
+    "1234",
+    "1234",
+    "",
+    "",
+    "",
+    "",
 )
 
 @Composable
@@ -186,4 +242,13 @@ private fun TickerListItemComponentPreview() {
 @Composable
 private fun TickerListComponentPreview() {
     TickerListComponent(tickerList = listOf())
+}
+
+@Preview
+@Composable
+private fun TickerPriceItemComponentPreview() {
+    TickerPriceItemComponent(
+        title = "title",
+        value = "value"
+    )
 }

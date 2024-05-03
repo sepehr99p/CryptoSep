@@ -43,22 +43,26 @@ class CandlesViewModel @Inject constructor(
 
     private val navigationParam = savedStateHandle.get<String>("symbol")
 
+    val interval: StateFlow<String> = MutableStateFlow("1day")
+
     init {
         fetchCandles(symbol = navigationParam ?: "")
     }
 
-    fun fetchCandles(interval: String = "1day", symbol: String) {
+    fun fetchCandles(symbol: String) {
         scope.launch {
-            candlesUseCase.invoke(interval = interval, symbol = symbol).catch {
+            candlesUseCase.invoke(interval = interval.value, symbol = symbol).catch {
                 _candles.value = DataState.FailedState(data = null)
             }.collect {
                 when (it) {
                     is ResultState.Error -> {
                         _candles.value = DataState.FailedState(data = null)
                     }
+
                     is ResultState.Loading -> {
                         _candles.value = DataState.LoadingState(data = null)
                     }
+
                     is ResultState.Success -> {
                         _candles.value = DataState.LoadedState(data = it.data)
                     }
