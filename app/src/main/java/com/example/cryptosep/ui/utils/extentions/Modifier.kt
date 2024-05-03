@@ -11,8 +11,8 @@ fun Modifier.shadowBackground(): Modifier =
         background(
             brush = Brush.horizontalGradient(
                 colors = listOf(
-                    MaterialTheme.colorScheme.primary,
-                    MaterialTheme.colorScheme.primaryContainer
+                    MaterialTheme.colorScheme.primaryContainer,
+                    MaterialTheme.colorScheme.primaryContainer.copy(alpha = 0.6f)
                 )
             )
         )

@@ -30,6 +30,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.example.cryptosep.domain.entity.SingleTickerEntity
 import com.example.cryptosep.domain.entity.TickerEntity
 import com.example.cryptosep.ui.theme.dimen.corner_8
+import com.example.cryptosep.ui.theme.dimen.padding_2
 import com.example.cryptosep.ui.theme.dimen.padding_4
 import com.example.cryptosep.ui.theme.dimen.padding_8
 import com.example.cryptosep.ui.utils.extentions.shadowBackground
@@ -58,9 +59,9 @@ private fun TickerListItemComponent(
         modifier = modifier
     ) {
         Text(
-            modifier = Modifier.padding(horizontal = padding_8, vertical = padding_4),
+            modifier = Modifier.padding(horizontal = padding_8, vertical = padding_2),
             text = tickerEntity.symbol,
-            color = MaterialTheme.colorScheme.onPrimary
+            color = MaterialTheme.colorScheme.primary
         )
         Row(
             modifier = Modifier
@@ -78,7 +79,9 @@ private fun TickerListItemComponent(
             verticalAlignment = Alignment.CenterVertically
         ) {
             Row(
-                modifier = Modifier.padding(horizontal = padding_8).weight(1f)
+                modifier = Modifier
+                    .padding(horizontal = padding_8)
+                    .weight(1f)
             ) {
                 TickerPriceItemComponent(
                     modifier = Modifier.weight(1f),
@@ -128,15 +131,15 @@ fun TickerPriceItemComponent(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Text(
-            modifier = Modifier.padding(horizontal = padding_4),
+            modifier = Modifier.padding(horizontal = padding_4, vertical = padding_2),
             text = title,
             color = MaterialTheme.colorScheme.onPrimary.copy(alpha = 0.7f),
             style = TextStyle().copy(fontWeight = FontWeight.W400)
         )
         Text(
-            modifier = Modifier.padding(horizontal = padding_4),
+            modifier = Modifier.padding(horizontal = padding_4, vertical = padding_2),
             text = value,
-            color = color,
+            color = color.copy(alpha = 0.7f),
             style = TextStyle().copy(fontWeight = FontWeight.W600),
             maxLines = 1,
             overflow = TextOverflow.Ellipsis
