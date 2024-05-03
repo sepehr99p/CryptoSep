@@ -2,6 +2,7 @@ package com.example.cryptosep.ui.screen.ticker
 
 import android.util.Log
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Box
@@ -36,6 +37,7 @@ import com.example.cryptosep.ui.theme.Bold_12
 import com.example.cryptosep.ui.theme.Medium_10
 import com.example.cryptosep.ui.theme.Medium_12
 import com.example.cryptosep.ui.theme.Regular_10
+import com.example.cryptosep.ui.theme.dimen.border_1
 import com.example.cryptosep.ui.theme.dimen.corner_8
 import com.example.cryptosep.ui.theme.dimen.padding_2
 import com.example.cryptosep.ui.theme.dimen.padding_4
@@ -56,7 +58,7 @@ fun TickerListComponent(
 }
 
 @Composable
-private fun TickerListItemComponent(
+internal fun TickerListItemComponent(
     modifier: Modifier = Modifier,
     tickerEntity: TickerEntity,
     onTickerClicked: ((symbol: String) -> Unit)? = null
@@ -181,18 +183,50 @@ fun SingleTickerComponent(
     singleTickerEntity: SingleTickerEntity,
     onTickerClicked: (() -> Unit)? = null
 ) {
+    val interactionSource = remember { MutableInteractionSource() }
     Column(
         modifier = modifier
-            .fillMaxWidth()
             .padding(padding_8)
             .clip(RoundedCornerShape(corner_8))
-            .shadowBackground()
-            .padding(horizontal = padding_4)
-            .clickable {
-                onTickerClicked?.invoke()
-            },
+            .border(
+                shape = RoundedCornerShape(corner_8),
+                width = border_1,
+                color = MaterialTheme.colorScheme.secondary
+            )
     ) {
-        Text(text = singleTickerEntity.price, color = MaterialTheme.colorScheme.onPrimary)
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = padding_8)
+                .clip(RoundedCornerShape(corner_8))
+                .shadowBackground()
+                .padding(horizontal = padding_4)
+                .clickable(
+                    interactionSource = interactionSource,
+                    indication = null
+                ) {
+                    onTickerClicked?.invoke()
+                },
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Row(
+                modifier = Modifier
+                    .padding(horizontal = padding_8)
+                    .weight(1f)
+            ) {
+                TickerPriceItemComponent(
+                    modifier = Modifier.weight(1f),
+                    value = singleTickerEntity.price,
+                    title = stringResource(id = R.string.price),
+                    color = Color.Green
+                )
+                TickerPriceItemComponent(
+                    modifier = Modifier.weight(1f),
+                    value = singleTickerEntity.size,
+                    title = stringResource(id = R.string.size)
+                )
+            }
+        }
     }
 
 }

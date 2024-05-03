@@ -77,9 +77,10 @@ fun TickerScreen(
             ) {
                 when (ticker.value) {
                     is DataState.FailedState -> ErrorComponent(stringResource(id = R.string.error_ticker_search))
-                    is DataState.LoadedState -> SingleTickerComponent(
-                        singleTickerEntity = ticker.value.data!!,
-                        onTickerClicked = { onTickerClicked.invoke(searchTicker.value) })
+                    is DataState.LoadedState ->
+                        SingleTickerComponent(
+                            singleTickerEntity = ticker.value.data!!,
+                            onTickerClicked = { onTickerClicked.invoke(searchTicker.value) })
 
                     is DataState.LoadingState -> LoadingComponent()
                 }

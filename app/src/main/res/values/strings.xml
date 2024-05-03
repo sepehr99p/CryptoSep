@@ -8,6 +8,8 @@
     <string name="high">High</string>
     <string name="low">Low</string>
     <string name="last">Last</string>
+    <string name="size">Size</string>
+    <string name="price">Price</string>
     <string name="ticker">Ticker</string>
     <string name="currency">Currency</string>
     <string name="markets">Markets</string>
