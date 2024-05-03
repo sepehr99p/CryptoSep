@@ -46,10 +46,10 @@ class CandlesViewModel @Inject constructor(
     val interval: StateFlow<String> = MutableStateFlow("1day")
 
     init {
-        fetchCandles(symbol = navigationParam ?: "")
+        fetchCandles()
     }
 
-    fun fetchCandles(symbol: String) {
+    fun fetchCandles(symbol: String = navigationParam ?: "") {
         scope.launch {
             candlesUseCase.invoke(interval = interval.value, symbol = symbol).catch {
                 _candles.value = DataState.FailedState(data = null)

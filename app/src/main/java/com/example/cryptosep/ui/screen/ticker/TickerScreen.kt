@@ -89,7 +89,9 @@ fun TickerScreen(
             callback = { showSearchBar.value = showSearchBar.value.not() }
         )
         when (tickerListState.value) {
-            is DataState.FailedState -> ErrorComponent("ticker list error")
+            is DataState.FailedState -> ErrorComponent("ticker list error") {
+                viewModel.fetchTickerList()
+            }
             is DataState.LoadedState -> TickerListComponent(tickerList = tickerListState.value.data!!) {
                 onTickerClicked.invoke(it)
             }

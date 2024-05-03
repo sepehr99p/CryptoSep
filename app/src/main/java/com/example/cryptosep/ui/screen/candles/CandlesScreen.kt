@@ -43,7 +43,9 @@ fun CandlesScreen(
     val candlesState = viewModel.candles.collectAsState()
     when (candlesState.value) {
         is DataState.FailedState -> {
-            ErrorComponent(message = "Failed to fetch data")
+            ErrorComponent(message = "Failed to fetch data") {
+                viewModel.fetchCandles()
+            }
         }
 
         is DataState.LoadedState -> {

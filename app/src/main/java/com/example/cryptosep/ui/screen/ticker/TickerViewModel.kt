@@ -70,7 +70,7 @@ class TickerViewModel @Inject constructor(
     }
 
 
-    private fun fetchTickerList() {
+    fun fetchTickerList() {
         scope.launch {
             tickerListUseCase.invoke().catch {
                 _tickerList.value = DataState.FailedState(data = null)
