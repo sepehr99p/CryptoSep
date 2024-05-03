@@ -65,5 +65,5 @@ private fun HomeItems(modifier: Modifier = Modifier, title: String, callback: ()
 @Preview
 @Composable
 fun HomeItemsPreview() {
-    HomeItems(title = "title"){}
+    HomeItems(title = "title") {}
 }

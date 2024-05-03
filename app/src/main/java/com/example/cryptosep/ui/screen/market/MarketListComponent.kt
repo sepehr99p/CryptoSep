@@ -1,12 +1,9 @@
 package com.example.cryptosep.ui.screen.market
 
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
-import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -40,8 +37,7 @@ fun MarketListItemComponent(modifier: Modifier = Modifier, title: String) {
             .padding(padding_8)
             .clip(RoundedCornerShape(corner_8))
             .shadowBackground()
-            .padding(horizontal = padding_16, vertical = padding_8)
-            ,
+            .padding(horizontal = padding_16, vertical = padding_8),
         text = title,
         color = MaterialTheme.colorScheme.onPrimary
     )
@@ -54,6 +50,7 @@ fun MarketListItemComponentPreview() {
 }
 
 
+@Preview
 @Composable
 private fun MarketListComponentPreview() {
     MarketListComponent(marketList = listOf())

@@ -1,6 +1,5 @@
 package com.example.cryptosep.data.mapper
 
-import android.util.Log
 import com.example.cryptosep.data.model.AllTickersResponse
 import com.example.cryptosep.data.model.BaseResponse
 import com.example.cryptosep.data.model.CurrencyResponse
@@ -34,7 +33,6 @@ val tickerListMapper =
             value.data.ticker.forEach {
                 result.add(it.toDomainModel())
             }
-            Log.i("TAG", "map: ")
             return result
         }
     }
@@ -64,7 +62,7 @@ val candlesMapper = object : MapperCallback<BaseResponse<List<List<String>>>, Li
 
 }
 
-val serverTimeMapper = object : MapperCallback<BaseResponse<Long>,Long> {
+val serverTimeMapper = object : MapperCallback<BaseResponse<Long>, Long> {
     override fun map(value: BaseResponse<Long>): Long {
         return value.data
     }

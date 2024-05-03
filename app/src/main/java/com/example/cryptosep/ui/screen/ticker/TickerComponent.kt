@@ -151,9 +151,9 @@ fun TickerPriceItemComponent(
 
 val mockTickerEntity = TickerEntity(
     "symbol",
-    "asdfjasdf",
-    "sdffds",
-    "asdfas",
+    "name",
+    "buy",
+    "sell",
     "",
     "",
     "234",
@@ -211,7 +211,7 @@ fun TickerScreenTopBar(callback: () -> Unit) {
     ) {
         Text(
             modifier = Modifier.align(Alignment.CenterStart),
-            text = "Tickers",
+            text = stringResource(id = R.string.ticker),
             color = MaterialTheme.colorScheme.onPrimary
         )
         Icon(
@@ -226,15 +226,26 @@ fun TickerScreenTopBar(callback: () -> Unit) {
 @Preview
 @Composable
 fun TickerScreenTopBarPreview() {
-    TickerScreenTopBar(
-        {}
-    )
+    TickerScreenTopBar {}
 }
 
 @Preview
 @Composable
 private fun SingleTickerComponentPreview() {
-//    SingleTickerComponent()
+    SingleTickerComponent(
+        singleTickerEntity = SingleTickerEntity(
+            sequence = "sequence",
+            price = "price",
+            size = "size",
+            bestAsk = "best ask price",
+            bestBidSize = "best bid price",
+            bestBid = "best bid",
+            bestAskSize = "best ask size",
+            time = 9283759084L
+        )
+    ) {
+
+    }
 }
 
 @Preview

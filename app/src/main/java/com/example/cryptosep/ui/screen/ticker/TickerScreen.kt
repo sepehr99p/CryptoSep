@@ -12,7 +12,6 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.SearchBar
-import androidx.compose.material3.SearchBarColors
 import androidx.compose.material3.SearchBarDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -109,5 +108,5 @@ fun TickerScreen(
 @Preview
 @Composable
 private fun TickerScreenPreview() {
-//    TickerScreen()
+    TickerScreen{}
 }

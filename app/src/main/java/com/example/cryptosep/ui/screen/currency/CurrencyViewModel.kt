@@ -6,7 +6,6 @@ import androidx.lifecycle.viewModelScope
 import com.example.cryptosep.domain.entity.CurrencyEntity
 import com.example.cryptosep.domain.usecase.CurrencyListUseCase
 import com.example.cryptosep.domain.utils.ResultState
-import com.example.cryptosep.ui.screen.home.HomeViewModel
 import com.example.cryptosep.ui.utils.DataState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineExceptionHandler

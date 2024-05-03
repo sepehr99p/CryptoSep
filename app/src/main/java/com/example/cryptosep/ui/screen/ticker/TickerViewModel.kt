@@ -3,10 +3,8 @@ package com.example.cryptosep.ui.screen.ticker
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.cryptosep.domain.entity.CandleEntity
 import com.example.cryptosep.domain.entity.SingleTickerEntity
 import com.example.cryptosep.domain.entity.TickerEntity
-import com.example.cryptosep.domain.usecase.CandlesUseCase
 import com.example.cryptosep.domain.usecase.FetchTickerUseCase
 import com.example.cryptosep.domain.usecase.TickerListUseCase
 import com.example.cryptosep.domain.utils.ResultState
@@ -50,7 +48,6 @@ class TickerViewModel @Inject constructor(
     val ticker: StateFlow<DataState<SingleTickerEntity?>> = _ticker
 
 
-
     init {
         fetchTickerList()
     }
@@ -91,8 +88,6 @@ class TickerViewModel @Inject constructor(
             }
         }
     }
-
-
 
 
 }

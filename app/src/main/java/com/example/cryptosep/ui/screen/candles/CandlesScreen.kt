@@ -133,7 +133,17 @@ fun CandleListItem(modifier: Modifier = Modifier, candle: CandleEntity) {
 @Preview
 @Composable
 private fun CandleListItemPreview() {
-//    CandleListItem()
+    CandleListItem(
+        candle = CandleEntity(
+            time = "time",
+            opening = "opening",
+            closing = "closing",
+            highest = "highest",
+            lowest = "lowest",
+            volume = "volume",
+            amount = "amount"
+        )
+    )
 }
 
 @Preview
