@@ -65,7 +65,7 @@ internal fun TickerListItemComponent(
 ) {
     val interactionSource = remember { MutableInteractionSource() }
     Column(
-        modifier = modifier
+        modifier = modifier.padding(top = padding_8)
     ) {
         Text(
             modifier = Modifier.padding(horizontal = padding_8, vertical = padding_2),

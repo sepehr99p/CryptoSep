@@ -48,7 +48,10 @@ fun ExchangeSelection(
             text = selectedExchange.value,
             color = MaterialTheme.colorScheme.onPrimary
         )
-        DropdownMenu(expanded = expanded.value, onDismissRequest = { expanded.value = false }) {
+        DropdownMenu(
+            modifier = Modifier.fillMaxWidth(),
+            expanded = expanded.value,
+            onDismissRequest = { expanded.value = false }) {
             list.forEach {
                 DropdownMenuItem(text = { Text(text = it.uppercase()) }, onClick = {
                     selectedExchange.value = it

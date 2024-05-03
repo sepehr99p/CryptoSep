@@ -43,7 +43,9 @@ class CandlesViewModel @Inject constructor(
 
     private val navigationParam = savedStateHandle.get<String>("symbol")
 
-    val interval: StateFlow<String> = MutableStateFlow("1day")
+    val interval: MutableStateFlow<String> = MutableStateFlow("1day")
+
+    val intervalList = listOf("1min","10min","30m","1h","1day")
 
     init {
         fetchCandles()
