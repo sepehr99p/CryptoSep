@@ -1,5 +1,6 @@
 package com.example.cryptosep.ui.screen.ticker
 
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
@@ -110,7 +111,7 @@ private fun TickerListItemComponent(
             Box(modifier = Modifier) {
                 Text(
                     modifier = Modifier.align(Alignment.CenterEnd),
-                    text = tickerEntity.changePrice,
+                    text = "${tickerEntity.changeRate} %",
                     color = if (tickerEntity.changePrice.contains("-")) {
                         Color.Red
                     } else {
