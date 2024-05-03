@@ -63,3 +63,10 @@ val candlesMapper = object : MapperCallback<BaseResponse<List<List<String>>>, Li
     }
 
 }
+
+val serverTimeMapper = object : MapperCallback<BaseResponse<Long>,Long> {
+    override fun map(value: BaseResponse<Long>): Long {
+        return value.data
+    }
+
+}

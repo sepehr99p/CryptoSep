@@ -28,4 +28,7 @@ interface KucoinApiService {
         @Query("symbol") symbol : String
     ) : Response<BaseResponse<List<List<String>>>>
 
+    @GET("/api/v1/timestamp")
+    suspend fun serverTime() : Response<BaseResponse<Long>>
+
 }

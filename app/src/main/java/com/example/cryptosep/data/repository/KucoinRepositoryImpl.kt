@@ -3,6 +3,7 @@ package com.example.cryptosep.data.repository
 import com.example.cryptosep.data.mapper.candlesMapper
 import com.example.cryptosep.data.mapper.currencyListMapper
 import com.example.cryptosep.data.mapper.marketListMapper
+import com.example.cryptosep.data.mapper.serverTimeMapper
 import com.example.cryptosep.data.mapper.tickerListMapper
 import com.example.cryptosep.data.mapper.tickerMapper
 import com.example.cryptosep.data.mapper.toResultState
@@ -34,4 +35,7 @@ class KucoinRepositoryImpl @Inject constructor(private val apiService: KucoinApi
         symbol: String
     ): ResultState<List<CandleEntity>> =
         toResultState(apiService.fetchCandles(interval, symbol), candlesMapper)
+
+    override suspend fun fetchServerTime(): ResultState<Long> =
+        toResultState(apiService.serverTime(), serverTimeMapper)
 }

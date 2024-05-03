@@ -18,4 +18,6 @@ interface KucoinRepository {
 
     suspend fun fetchCandles(interval : String, symbol: String) : ResultState<List<CandleEntity>>
 
+    suspend fun fetchServerTime() : ResultState<Long>
+
 }
