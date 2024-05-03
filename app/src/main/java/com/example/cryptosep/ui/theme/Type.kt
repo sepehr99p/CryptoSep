@@ -9,8 +9,9 @@ import androidx.compose.ui.unit.sp
 import com.example.cryptosep.R
 
 val font = FontFamily(
-    Font(R.font.aclonica, FontWeight.Thin),
-    Font(R.font.agbalumo, FontWeight.ExtraLight),
+    Font(R.font.allerta_stencil, FontWeight.Thin),
+//    Font(R.font.aclonica, FontWeight.Thin),
+//    Font(R.font.agbalumo, FontWeight.ExtraLight),
 )
 
 
