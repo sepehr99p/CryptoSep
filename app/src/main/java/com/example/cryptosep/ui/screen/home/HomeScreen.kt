@@ -13,8 +13,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavHostController
+import com.example.cryptosep.R
 import com.example.cryptosep.ui.NavigationItem
 import com.example.cryptosep.ui.theme.dimen.corner_8
 import com.example.cryptosep.ui.theme.dimen.padding_8
@@ -24,16 +26,16 @@ import com.example.cryptosep.ui.utils.extentions.shadowBackground
 fun HomeScreen(navController: NavHostController) {
 
     Column(modifier = Modifier.fillMaxWidth()) {
-        HomeItems(title = "Ticker") {
+        HomeItems(title = stringResource(id = R.string.ticker)) {
             navController.navigate(NavigationItem.Tickers.route)
         }
-        HomeItems(title = "Currency") {
+        HomeItems(title = stringResource(id = R.string.currency)) {
             navController.navigate(NavigationItem.Currency.route)
         }
-        HomeItems(title = "Markets") {
+        HomeItems(title = stringResource(id = R.string.markets)) {
             navController.navigate(NavigationItem.Market.route)
         }
-        HomeItems(title = "Settings") {
+        HomeItems(title = stringResource(id = R.string.settings)) {
             navController.navigate(NavigationItem.Settings.route)
         }
     }

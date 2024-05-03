@@ -14,7 +14,9 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
+import com.example.cryptosep.R
 import com.example.cryptosep.ui.theme.dimen.padding_4
 import com.example.cryptosep.ui.theme.dimen.padding_8
 
@@ -37,12 +39,12 @@ fun ErrorComponent(message: String, callback: (() -> Unit)? = null) {
             Text(
                 modifier = Modifier
                     .padding(horizontal = padding_4),
-                text = "Retry",
+                text = stringResource(id = R.string.retry),
                 color = MaterialTheme.colorScheme.onPrimary
             )
             Icon(
                 imageVector = Icons.Default.Refresh,
-                contentDescription = "retry",
+                contentDescription = stringResource(id = R.string.retry),
                 tint = MaterialTheme.colorScheme.onPrimary
             )
         }

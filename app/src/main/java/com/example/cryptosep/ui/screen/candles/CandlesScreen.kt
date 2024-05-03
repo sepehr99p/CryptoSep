@@ -15,8 +15,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.example.cryptosep.R
 import com.example.cryptosep.domain.entity.CandleEntity
 import com.example.cryptosep.ui.theme.dimen.corner_8
 import com.example.cryptosep.ui.theme.dimen.padding_8
@@ -43,7 +45,7 @@ fun CandlesScreen(
     val candlesState = viewModel.candles.collectAsState()
     when (candlesState.value) {
         is DataState.FailedState -> {
-            ErrorComponent(message = "Failed to fetch data") {
+            ErrorComponent(message = stringResource(id = R.string.error_candles)) {
                 viewModel.fetchCandles()
             }
         }

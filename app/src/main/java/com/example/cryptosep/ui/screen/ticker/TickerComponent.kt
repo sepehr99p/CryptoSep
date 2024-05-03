@@ -23,10 +23,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.rememberVectorPainter
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
+import com.example.cryptosep.R
 import com.example.cryptosep.domain.entity.SingleTickerEntity
 import com.example.cryptosep.domain.entity.TickerEntity
 import com.example.cryptosep.ui.theme.dimen.corner_8
@@ -86,18 +88,18 @@ private fun TickerListItemComponent(
                 TickerPriceItemComponent(
                     modifier = Modifier.weight(1f),
                     value = tickerEntity.high,
-                    title = "High",
+                    title = stringResource(id = R.string.high),
                     color = Color.Green
                 )
                 TickerPriceItemComponent(
                     modifier = Modifier.weight(1f),
                     value = tickerEntity.last,
-                    title = "Last"
+                    title = stringResource(id = R.string.last)
                 )
                 TickerPriceItemComponent(
                     modifier = Modifier.weight(1f),
                     value = tickerEntity.low,
-                    title = "Low",
+                    title = stringResource(id = R.string.low),
                     color = Color.Red
                 )
             }

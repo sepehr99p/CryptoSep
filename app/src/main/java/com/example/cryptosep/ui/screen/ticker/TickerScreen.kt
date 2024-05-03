@@ -21,8 +21,10 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.example.cryptosep.R
 import com.example.cryptosep.ui.theme.dimen.corner_8
 import com.example.cryptosep.ui.theme.dimen.padding_8
 import com.example.cryptosep.ui.utils.DataState
@@ -51,7 +53,7 @@ fun TickerScreen(
                     .padding(padding_8),
                 query = searchTicker.value,
                 shape = RoundedCornerShape(corner_8),
-                placeholder = { Text(text = "BTC-USDT") },
+                placeholder = { Text(text = stringResource(id = R.string.search_ticker_place_holder)) },
                 onQueryChange = { searchTicker.value = it.uppercase() },
                 onSearch = { viewModel.getTicker(searchTicker.value) },
                 active = true,
@@ -75,7 +77,7 @@ fun TickerScreen(
                 }
             ) {
                 when (ticker.value) {
-                    is DataState.FailedState -> ErrorComponent(" :/ ")
+                    is DataState.FailedState -> ErrorComponent(stringResource(id = R.string.error_ticker_search))
                     is DataState.LoadedState -> SingleTickerComponent(
                         singleTickerEntity = ticker.value.data!!,
                         onTickerClicked = { onTickerClicked.invoke(searchTicker.value) })
@@ -89,9 +91,10 @@ fun TickerScreen(
             callback = { showSearchBar.value = showSearchBar.value.not() }
         )
         when (tickerListState.value) {
-            is DataState.FailedState -> ErrorComponent("ticker list error") {
+            is DataState.FailedState -> ErrorComponent(stringResource(id = R.string.error_ticker_list)) {
                 viewModel.fetchTickerList()
             }
+
             is DataState.LoadedState -> TickerListComponent(tickerList = tickerListState.value.data!!) {
                 onTickerClicked.invoke(it)
             }
