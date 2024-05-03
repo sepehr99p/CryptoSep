@@ -31,6 +31,10 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.example.cryptosep.R
 import com.example.cryptosep.domain.entity.SingleTickerEntity
 import com.example.cryptosep.domain.entity.TickerEntity
+import com.example.cryptosep.ui.theme.Bold_12
+import com.example.cryptosep.ui.theme.Medium_10
+import com.example.cryptosep.ui.theme.Medium_12
+import com.example.cryptosep.ui.theme.Regular_10
 import com.example.cryptosep.ui.theme.dimen.corner_8
 import com.example.cryptosep.ui.theme.dimen.padding_2
 import com.example.cryptosep.ui.theme.dimen.padding_4
@@ -136,13 +140,13 @@ fun TickerPriceItemComponent(
             modifier = Modifier.padding(horizontal = padding_4, vertical = padding_2),
             text = title,
             color = MaterialTheme.colorScheme.onPrimary.copy(alpha = 0.7f),
-            style = TextStyle().copy(fontWeight = FontWeight.W400)
+            style = Regular_10
         )
         Text(
             modifier = Modifier.padding(horizontal = padding_4, vertical = padding_2),
             text = value,
             color = color.copy(alpha = 0.7f),
-            style = TextStyle().copy(fontWeight = FontWeight.W600),
+            style = Medium_12,
             maxLines = 1,
             overflow = TextOverflow.Ellipsis
         )
