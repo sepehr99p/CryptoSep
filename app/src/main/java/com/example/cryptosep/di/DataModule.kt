@@ -2,6 +2,7 @@ package com.example.cryptosep.di
 
 import com.example.cryptosep.data.remote.KucoinApiService
 import com.example.cryptosep.data.repository.KucoinRepositoryImpl
+import com.example.cryptosep.data.utils.NetworkConnection
 import com.example.cryptosep.domain.repository.KucoinRepository
 import com.example.cryptosep.domain.usecase.CurrencyListUseCase
 import com.example.cryptosep.domain.usecase.FetchTickerUseCase
@@ -19,8 +20,11 @@ object DataModule {
 
     @Provides
     @Singleton
-    fun provideKucoinRepository(api: KucoinApiService): KucoinRepository =
-        KucoinRepositoryImpl(api)
+    fun provideKucoinRepository(
+        api: KucoinApiService,
+        networkConnection: NetworkConnection
+    ): KucoinRepository =
+        KucoinRepositoryImpl(api, networkConnection)
 
     @Provides
     fun provideCurrencyUseCase(repository: KucoinRepository): CurrencyListUseCase =

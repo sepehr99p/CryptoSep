@@ -1,11 +1,14 @@
 package com.example.cryptosep.di
 
+import android.content.Context
 import com.example.cryptosep.data.remote.KucoinApiService
+import com.example.cryptosep.data.utils.NetworkConnection
 import com.example.cryptosep.domain.utils.BASE_URL
 import com.example.cryptosep.domain.utils.TIME_OUT
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -18,6 +21,14 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 object NetworkModule {
+
+    @Singleton
+    @Provides
+    fun provideNetworkConnection(
+        @ApplicationContext context: Context
+    ): NetworkConnection {
+        return NetworkConnection(context)
+    }
 
     @Provides
     @Singleton

@@ -8,6 +8,7 @@ import com.example.cryptosep.data.mapper.tickerListMapper
 import com.example.cryptosep.data.mapper.tickerMapper
 import com.example.cryptosep.data.mapper.toResultState
 import com.example.cryptosep.data.remote.KucoinApiService
+import com.example.cryptosep.data.utils.NetworkConnection
 import com.example.cryptosep.domain.entity.CandleEntity
 import com.example.cryptosep.domain.entity.CurrencyEntity
 import com.example.cryptosep.domain.entity.SingleTickerEntity
@@ -16,7 +17,10 @@ import com.example.cryptosep.domain.repository.KucoinRepository
 import com.example.cryptosep.domain.utils.ResultState
 import javax.inject.Inject
 
-class KucoinRepositoryImpl @Inject constructor(private val apiService: KucoinApiService) :
+class KucoinRepositoryImpl @Inject constructor(
+    private val apiService: KucoinApiService,
+    private val networkConnection: NetworkConnection
+) :
     KucoinRepository {
     override suspend fun fetchCurrencyList(): ResultState<List<CurrencyEntity>> =
         toResultState(apiService.fetchCurrencyList(), currencyListMapper)
