@@ -51,7 +51,7 @@ fun TickerListComponent(
     onTickerClicked: ((symbol: String) -> Unit)? = null
 ) {
     LazyColumn(modifier = modifier) {
-        items(tickerList.sortedBy { it.bestAskSize.toFloat() }) {
+        items(tickerList.sortedBy { tickerEntity -> tickerEntity.bestBidSize.takeIf { it.isNotEmpty() }?.toFloat() }) {
             TickerListItemComponent(tickerEntity = it, onTickerClicked = onTickerClicked)
         }
     }
