@@ -65,37 +65,39 @@ fun CandlesScreen(
         val expanded = remember {
             mutableStateOf(false)
         }
-        Text(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(padding_8)
-                .border(
-                    width = border_2,
-                    shape = RoundedCornerShape(corner_16),
-                    color = MaterialTheme.colorScheme.onPrimary
-                )
-                .padding(padding_8)
-                .clickable {
-                    expanded.value = true
-                },
-            text = viewModel.interval.value ?: "",
-            color = MaterialTheme.colorScheme.onPrimary
-        )
-        DropdownMenu(
-            modifier = Modifier.fillMaxWidth(),
-            expanded = expanded.value,
-            onDismissRequest = { expanded.value = false }) {
-            viewModel.intervalList.forEach {
-                DropdownMenuItem(
-                    modifier = Modifier.fillMaxWidth(),
-                    text = { Text(text = it.uppercase()) },
-                    colors = MenuDefaults.itemColors()
-                        .copy(textColor = MaterialTheme.colorScheme.onPrimary),
-                    onClick = {
-                        viewModel.interval.value = it
-                        expanded.value = false
-                        viewModel.fetchCandles()
-                    })
+        Box(modifier = Modifier) {
+            Text(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(padding_8)
+                    .border(
+                        width = border_2,
+                        shape = RoundedCornerShape(corner_16),
+                        color = MaterialTheme.colorScheme.onPrimary
+                    )
+                    .padding(padding_8)
+                    .clickable {
+                        expanded.value = true
+                    },
+                text = viewModel.interval.value ?: "",
+                color = MaterialTheme.colorScheme.onPrimary
+            )
+            DropdownMenu(
+                modifier = Modifier.fillMaxWidth(),
+                expanded = expanded.value,
+                onDismissRequest = { expanded.value = false }) {
+                viewModel.intervalList.forEach {
+                    DropdownMenuItem(
+                        modifier = Modifier.fillMaxWidth(),
+                        text = { Text(text = it.uppercase()) },
+                        colors = MenuDefaults.itemColors()
+                            .copy(textColor = MaterialTheme.colorScheme.onPrimary),
+                        onClick = {
+                            viewModel.interval.value = it
+                            expanded.value = false
+                            viewModel.fetchCandles()
+                        })
+                }
             }
         }
 

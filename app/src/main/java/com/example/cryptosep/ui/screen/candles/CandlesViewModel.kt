@@ -45,7 +45,7 @@ class CandlesViewModel @Inject constructor(
 
     val interval: MutableStateFlow<String> = MutableStateFlow("1day")
 
-    val intervalList = listOf("1min","10min","30m","1h","1day")
+    val intervalList = listOf("1min","10min","30min","1hour","1day")
 
     init {
         fetchCandles()
