@@ -1,6 +1,5 @@
 package com.example.cryptosep.ui.screen.ticker
 
-import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -26,15 +25,11 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.rememberVectorPainter
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.cryptosep.R
 import com.example.cryptosep.domain.entity.SingleTickerEntity
 import com.example.cryptosep.domain.entity.TickerEntity
-import com.example.cryptosep.ui.theme.Bold_12
-import com.example.cryptosep.ui.theme.Medium_10
 import com.example.cryptosep.ui.theme.Medium_12
 import com.example.cryptosep.ui.theme.Regular_10
 import com.example.cryptosep.ui.theme.dimen.border_1
@@ -48,10 +43,11 @@ import com.example.cryptosep.ui.utils.extentions.shadowBackground
 fun TickerListComponent(
     modifier: Modifier = Modifier,
     tickerList: List<TickerEntity>,
-    onTickerClicked: ((symbol: String) -> Unit)? = null
+    onTickerClicked: ((symbol: String) -> Unit)? = null,
+    sortBy : (tickerEntity : TickerEntity) -> Float?
 ) {
     LazyColumn(modifier = modifier) {
-        items(tickerList.sortedBy { tickerEntity -> tickerEntity.bestBidSize.takeIf { it.isNotEmpty() }?.toFloat() }) {
+        items(tickerList.sortedBy { tickerEntity -> sortBy.invoke(tickerEntity) }) {
             TickerListItemComponent(tickerEntity = it, onTickerClicked = onTickerClicked)
         }
     }
@@ -310,7 +306,9 @@ private fun TickerListItemComponentPreview() {
 @Preview
 @Composable
 private fun TickerListComponentPreview() {
-    TickerListComponent(tickerList = listOf())
+    TickerListComponent(tickerList = listOf()){
+        it.bestAskSize.toFloat()
+    }
 }
 
 @Preview

@@ -96,9 +96,13 @@ fun TickerScreen(
                 viewModel.fetchTickerList()
             }
 
-            is DataState.LoadedState -> TickerListComponent(tickerList = tickerListState.value.data!!) {
-                onTickerClicked.invoke(it)
-            }
+            is DataState.LoadedState -> TickerListComponent(
+                tickerList = tickerListState.value.data!!,
+                onTickerClicked = { onTickerClicked.invoke(it) },
+                sortBy = { tickerEntity ->
+                    tickerEntity.bestBidSize.takeIf { it.isNotEmpty() }?.toFloat()
+                }
+            )
 
             is DataState.LoadingState -> LoadingComponent()
         }
@@ -110,5 +114,5 @@ fun TickerScreen(
 @Preview
 @Composable
 private fun TickerScreenPreview() {
-    TickerScreen{}
+    TickerScreen {}
 }

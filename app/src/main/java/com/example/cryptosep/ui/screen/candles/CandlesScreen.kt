@@ -8,15 +8,12 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.Divider
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.MenuDefaults
-import androidx.compose.material3.MenuItemColors
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -28,7 +25,6 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.cryptosep.R
 import com.example.cryptosep.domain.entity.CandleEntity
@@ -57,14 +53,13 @@ fun CandlesScreen(
     viewModel: CandlesViewModel = hiltViewModel()
 ) {
     val candlesState = viewModel.candles.collectAsState()
+    val selectedInterval = viewModel.interval.collectAsState()
     Column(
         modifier = Modifier
             .fillMaxWidth()
             .fillMaxHeight()
     ) {
-        val expanded = remember {
-            mutableStateOf(false)
-        }
+        val expanded = remember { mutableStateOf(false) }
         Box(modifier = Modifier) {
             Text(
                 modifier = Modifier
@@ -76,10 +71,8 @@ fun CandlesScreen(
                         color = MaterialTheme.colorScheme.onPrimary
                     )
                     .padding(padding_8)
-                    .clickable {
-                        expanded.value = true
-                    },
-                text = viewModel.interval.value ?: "",
+                    .clickable { expanded.value = true },
+                text = selectedInterval.value,
                 color = MaterialTheme.colorScheme.onPrimary
             )
             DropdownMenu(
@@ -102,11 +95,10 @@ fun CandlesScreen(
         }
 
         when (candlesState.value) {
-            is DataState.FailedState -> {
-                ErrorComponent(message = stringResource(id = R.string.error_candles)) {
-                    viewModel.fetchCandles()
-                }
+            is DataState.FailedState -> ErrorComponent(message = stringResource(id = R.string.error_candles)) {
+                viewModel.fetchCandles()
             }
+
 
             is DataState.LoadedState -> {
                 CandlesList(
@@ -115,9 +107,7 @@ fun CandlesScreen(
                 )
             }
 
-            is DataState.LoadingState -> {
-                LoadingComponent()
-            }
+            is DataState.LoadingState -> LoadingComponent()
         }
     }
 }
@@ -182,7 +172,6 @@ fun CandleListItem(modifier: Modifier = Modifier, candle: CandleEntity) {
             text = candle.amount,
             color = Color.Green
         )
-
         Text(
             modifier = Modifier.align(Alignment.CenterEnd),
             text = candle.time,
