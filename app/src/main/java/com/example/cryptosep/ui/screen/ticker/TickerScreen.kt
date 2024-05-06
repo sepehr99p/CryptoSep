@@ -90,6 +90,7 @@ fun TickerScreen(
         TickerScreenTopBar(
             callback = { showSearchBar.value = showSearchBar.value.not() }
         )
+//        TickerScreenSortComponent()
         when (tickerListState.value) {
             is DataState.FailedState -> ErrorComponent(stringResource(id = R.string.error_ticker_list)) {
                 viewModel.fetchTickerList()

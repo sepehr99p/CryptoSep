@@ -11,9 +11,12 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Divider
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.MenuDefaults
+import androidx.compose.material3.MenuItemColors
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -79,13 +82,15 @@ fun CandlesScreen(
             color = MaterialTheme.colorScheme.onPrimary
         )
         DropdownMenu(
-            modifier = Modifier.height(30.dp),
+            modifier = Modifier.fillMaxWidth(),
             expanded = expanded.value,
             onDismissRequest = { expanded.value = false }) {
             viewModel.intervalList.forEach {
                 DropdownMenuItem(
                     modifier = Modifier.fillMaxWidth(),
                     text = { Text(text = it.uppercase()) },
+                    colors = MenuDefaults.itemColors()
+                        .copy(textColor = MaterialTheme.colorScheme.onPrimary),
                     onClick = {
                         viewModel.interval.value = it
                         expanded.value = false

@@ -262,6 +262,20 @@ fun TickerScreenTopBar(callback: () -> Unit) {
     }
 }
 
+@Composable
+fun TickerScreenSortComponent(modifier: Modifier = Modifier) {
+    Box(modifier = modifier) {
+
+    }
+}
+
+
+@Preview
+@Composable
+fun TickerScreenSortComponentPreview() {
+    TickerScreenSortComponent()
+}
+
 @Preview
 @Composable
 fun TickerScreenTopBarPreview() {
