@@ -14,10 +14,15 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Search
+import androidx.compose.material3.DropdownMenu
+import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.MenuDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -33,6 +38,8 @@ import com.example.cryptosep.domain.entity.TickerEntity
 import com.example.cryptosep.ui.theme.Medium_12
 import com.example.cryptosep.ui.theme.Regular_10
 import com.example.cryptosep.ui.theme.dimen.border_1
+import com.example.cryptosep.ui.theme.dimen.border_2
+import com.example.cryptosep.ui.theme.dimen.corner_16
 import com.example.cryptosep.ui.theme.dimen.corner_8
 import com.example.cryptosep.ui.theme.dimen.padding_2
 import com.example.cryptosep.ui.theme.dimen.padding_4
@@ -44,7 +51,7 @@ fun TickerListComponent(
     modifier: Modifier = Modifier,
     tickerList: List<TickerEntity>,
     onTickerClicked: ((symbol: String) -> Unit)? = null,
-    sortBy : (tickerEntity : TickerEntity) -> Float?
+    sortBy: (tickerEntity: TickerEntity) -> Float?
 ) {
     LazyColumn(modifier = modifier) {
         items(tickerList.sortedBy { tickerEntity -> sortBy.invoke(tickerEntity) }) {
@@ -259,9 +266,43 @@ fun TickerScreenTopBar(callback: () -> Unit) {
 }
 
 @Composable
-fun TickerScreenSortComponent(modifier: Modifier = Modifier) {
+fun TickerScreenSortComponent(
+    modifier: Modifier = Modifier,
+    sortList: List<TickerUiState>,
+    selectedTicker: MutableState<TickerUiState>
+) {
+    val expanded = remember { mutableStateOf(false) }
     Box(modifier = modifier) {
-
+        Text(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(padding_8)
+                .border(
+                    width = border_2,
+                    shape = RoundedCornerShape(corner_16),
+                    color = MaterialTheme.colorScheme.onPrimary
+                )
+                .padding(padding_8)
+                .clickable { expanded.value = true },
+            text = selectedTicker.value.name,
+            color = MaterialTheme.colorScheme.onPrimary
+        )
+        DropdownMenu(
+            modifier = Modifier.fillMaxWidth(),
+            expanded = expanded.value,
+            onDismissRequest = { expanded.value = false }) {
+            sortList.forEach {
+                DropdownMenuItem(
+                    modifier = Modifier.fillMaxWidth(),
+                    text = { Text(text = it.name) },
+                    colors = MenuDefaults.itemColors()
+                        .copy(textColor = MaterialTheme.colorScheme.onPrimary),
+                    onClick = {
+                        selectedTicker.value = it
+                        expanded.value = false
+                    })
+            }
+        }
     }
 }
 
@@ -269,7 +310,9 @@ fun TickerScreenSortComponent(modifier: Modifier = Modifier) {
 @Preview
 @Composable
 fun TickerScreenSortComponentPreview() {
-    TickerScreenSortComponent()
+    val state = rememberTickerSortByBidState()
+    val selected = remember { mutableStateOf(state) }
+    TickerScreenSortComponent(sortList = listOf(), selectedTicker = selected)
 }
 
 @Preview
@@ -306,7 +349,7 @@ private fun TickerListItemComponentPreview() {
 @Preview
 @Composable
 private fun TickerListComponentPreview() {
-    TickerListComponent(tickerList = listOf()){
+    TickerListComponent(tickerList = listOf()) {
         it.bestAskSize.toFloat()
     }
 }

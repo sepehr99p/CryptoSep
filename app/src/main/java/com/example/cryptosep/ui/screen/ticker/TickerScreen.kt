@@ -40,6 +40,11 @@ fun TickerScreen(
     val ticker = viewModel.ticker.collectAsState()
     val searchTicker = remember { mutableStateOf("") }
     val showSearchBar = remember { mutableStateOf(false) }
+    val sortStates = listOf(
+        rememberTickerSortByBidState(),
+        rememberTickerSortByChangeRateState()
+    )
+    val selectedTickerSort = remember { mutableStateOf(sortStates[0]) }
 
     Column {
         if (showSearchBar.value) {
@@ -81,7 +86,6 @@ fun TickerScreen(
                         SingleTickerComponent(
                             singleTickerEntity = ticker.value.data!!,
                             onTickerClicked = { onTickerClicked.invoke(searchTicker.value) })
-
                     is DataState.LoadingState -> LoadingComponent()
                 }
 
@@ -90,7 +94,7 @@ fun TickerScreen(
         TickerScreenTopBar(
             callback = { showSearchBar.value = showSearchBar.value.not() }
         )
-//        TickerScreenSortComponent()
+        TickerScreenSortComponent(sortList = sortStates, selectedTicker = selectedTickerSort)
         when (tickerListState.value) {
             is DataState.FailedState -> ErrorComponent(stringResource(id = R.string.error_ticker_list)) {
                 viewModel.fetchTickerList()
@@ -99,9 +103,7 @@ fun TickerScreen(
             is DataState.LoadedState -> TickerListComponent(
                 tickerList = tickerListState.value.data!!,
                 onTickerClicked = { onTickerClicked.invoke(it) },
-                sortBy = { tickerEntity ->
-                    tickerEntity.bestBidSize.takeIf { it.isNotEmpty() }?.toFloat()
-                }
+                sortBy = { selectedTickerSort.value.sort(it) }
             )
 
             is DataState.LoadingState -> LoadingComponent()
