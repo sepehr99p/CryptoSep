@@ -20,4 +20,6 @@ interface KucoinRepository {
 
     suspend fun fetchServerTime() : ResultState<Long>
 
+    suspend fun fetchPrices() : ResultState<String>
+
 }

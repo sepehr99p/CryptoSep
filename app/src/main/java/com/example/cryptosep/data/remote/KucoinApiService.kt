@@ -3,6 +3,7 @@ package com.example.cryptosep.data.remote
 import com.example.cryptosep.data.model.AllTickersResponse
 import com.example.cryptosep.data.model.BaseResponse
 import com.example.cryptosep.data.model.CurrencyResponse
+import com.example.cryptosep.data.model.PriceResponse
 import com.example.cryptosep.data.model.SingleTickerResponse
 import retrofit2.Response
 import retrofit2.http.GET
@@ -30,5 +31,8 @@ interface KucoinApiService {
 
     @GET("/api/v1/timestamp")
     suspend fun serverTime() : Response<BaseResponse<Long>>
+
+    @GET("/api/v1/prices")
+    suspend fun getPrices() : Response<BaseResponse<PriceResponse>>
 
 }

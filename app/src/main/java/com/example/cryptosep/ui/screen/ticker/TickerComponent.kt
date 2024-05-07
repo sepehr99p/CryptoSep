@@ -309,7 +309,7 @@ fun TickerScreenSortComponent(
 
 @Preview
 @Composable
-fun TickerScreenSortComponentPreview() {
+private fun TickerScreenSortComponentPreview() {
     val state = rememberTickerSortByBidState()
     val selected = remember { mutableStateOf(state) }
     TickerScreenSortComponent(sortList = listOf(), selectedTicker = selected)
@@ -317,7 +317,7 @@ fun TickerScreenSortComponentPreview() {
 
 @Preview
 @Composable
-fun TickerScreenTopBarPreview() {
+private fun TickerScreenTopBarPreview() {
     TickerScreenTopBar {}
 }
 

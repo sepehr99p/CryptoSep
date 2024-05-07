@@ -42,4 +42,8 @@ class KucoinRepositoryImpl @Inject constructor(
 
     override suspend fun fetchServerTime(): ResultState<Long> =
         toResultState(apiService.serverTime(), serverTimeMapper)
+
+    override suspend fun fetchPrices(): ResultState<String> {
+        TODO("Not yet implemented")
+    }
 }
