@@ -183,21 +183,21 @@ fun CandleListItem(modifier: Modifier = Modifier, candle: CandleEntity) {
     }
 }
 
+private val mockCandleEntity = CandleEntity(
+    time = "time",
+    opening = "opening",
+    closing = "closing",
+    highest = "highest",
+    lowest = "lowest",
+    volume = "volume",
+    amount = "amount"
+)
+
 
 @Preview
 @Composable
 private fun CandleListItemPreview() {
-    CandleListItem(
-        candle = CandleEntity(
-            time = "time",
-            opening = "opening",
-            closing = "closing",
-            highest = "highest",
-            lowest = "lowest",
-            volume = "volume",
-            amount = "amount"
-        )
-    )
+    CandleListItem(candle = mockCandleEntity)
 }
 
 @Preview

@@ -23,7 +23,7 @@ fun MarketListComponent(modifier: Modifier = Modifier, marketList: List<String>)
 //            MarketListItemComponent(title = it)
 //        }
 //    }
-    LazyVerticalGrid(columns = GridCells.Fixed(3), content = {
+    LazyVerticalGrid(modifier = modifier,columns = GridCells.Fixed(3), content = {
         items(marketList) {
             MarketListItemComponent(title = it)
         }

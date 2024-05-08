@@ -42,7 +42,7 @@ fun CurrencyItemComponent(modifier: Modifier = Modifier, currencyEntity: Currenc
 
 }
 
-val mockCurrencyEntity = CurrencyEntity(
+private val mockCurrencyEntity = CurrencyEntity(
     currency = "Currency",
     name = "name",
     fullName = "full name",

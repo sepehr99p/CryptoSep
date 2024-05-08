@@ -17,11 +17,6 @@ val image_16: Dp
     get() = dimensionResource(id = R.dimen.image_16)
 
 @Stable
-val image_20: Dp
-    @Composable
-    get() = dimensionResource(id = R.dimen.image_20)
-
-@Stable
 val image_24: Dp
     @Composable
     get() = dimensionResource(id = R.dimen.image_24)
@@ -36,10 +31,6 @@ val image_36: Dp
     @Composable
     get() = dimensionResource(id = R.dimen.image_36)
 
-@Stable
-val image_39: Dp
-    @Composable
-    get() = dimensionResource(id = R.dimen.image_39)
 
 val image_45: Dp
     @Composable
