@@ -3,6 +3,7 @@ package com.example.cryptosep.data.mapper
 import com.example.cryptosep.data.model.AllTickersResponse
 import com.example.cryptosep.data.model.BaseResponse
 import com.example.cryptosep.data.model.CurrencyResponse
+import com.example.cryptosep.data.model.PriceResponse
 import com.example.cryptosep.data.model.SingleTickerResponse
 import com.example.cryptosep.domain.entity.CandleEntity
 import com.example.cryptosep.domain.entity.CurrencyEntity
@@ -65,6 +66,12 @@ val candlesMapper = object : MapperCallback<BaseResponse<List<List<String>>>, Li
 val serverTimeMapper = object : MapperCallback<BaseResponse<Long>, Long> {
     override fun map(value: BaseResponse<Long>): Long {
         return value.data
+    }
+}
+
+val priceMapper = object : MapperCallback<BaseResponse<PriceResponse>, String> {
+    override fun map(value: BaseResponse<PriceResponse>): String {
+        return value.data.BTC
     }
 
 }

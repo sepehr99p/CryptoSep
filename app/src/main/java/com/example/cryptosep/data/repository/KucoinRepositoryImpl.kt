@@ -3,6 +3,7 @@ package com.example.cryptosep.data.repository
 import com.example.cryptosep.data.mapper.candlesMapper
 import com.example.cryptosep.data.mapper.currencyListMapper
 import com.example.cryptosep.data.mapper.marketListMapper
+import com.example.cryptosep.data.mapper.priceMapper
 import com.example.cryptosep.data.mapper.serverTimeMapper
 import com.example.cryptosep.data.mapper.tickerListMapper
 import com.example.cryptosep.data.mapper.tickerMapper
@@ -43,7 +44,6 @@ class KucoinRepositoryImpl @Inject constructor(
     override suspend fun fetchServerTime(): ResultState<Long> =
         toResultState(apiService.serverTime(), serverTimeMapper)
 
-    override suspend fun fetchPrices(): ResultState<String> {
-        TODO("Not yet implemented")
-    }
+    override suspend fun fetchPrices(): ResultState<String> =
+        toResultState(apiService.getPrices(), priceMapper)
 }
