@@ -26,7 +26,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.cryptosep.R
 import com.example.cryptosep.ui.theme.dimen.corner_8
 import com.example.cryptosep.ui.theme.dimen.padding_8
-import com.example.cryptosep.ui.utils.DataState
+import com.example.cryptosep.ui.utils.UiState
 import com.example.cryptosep.ui.utils.components.ErrorComponent
 import com.example.cryptosep.ui.utils.components.LoadingComponent
 
@@ -81,12 +81,15 @@ fun TickerScreen(
                 }
             ) {
                 when (ticker.value) {
-                    is DataState.FailedState -> ErrorComponent(stringResource(id = R.string.error_ticker_search))
-                    is DataState.LoadedState ->
+                    is UiState.Failed -> ErrorComponent(stringResource(id = R.string.error_ticker_search))
+                    is UiState.Success ->
                         SingleTickerComponent(
-                            singleTickerEntity = ticker.value.data!!,
+                            singleTickerEntity = (ticker.value as UiState.Success).data!!,
                             onTickerClicked = { onTickerClicked.invoke(searchTicker.value) })
-                    is DataState.LoadingState -> LoadingComponent()
+                    is UiState.Loading -> LoadingComponent()
+                    is UiState.Initialize -> {
+
+                    }
                 }
 
             }
@@ -96,17 +99,20 @@ fun TickerScreen(
         )
         TickerScreenSortComponent(sortList = sortStates, selectedTicker = selectedTickerSort)
         when (tickerListState.value) {
-            is DataState.FailedState -> ErrorComponent(stringResource(id = R.string.error_ticker_list)) {
+            is UiState.Failed -> ErrorComponent(stringResource(id = R.string.error_ticker_list)) {
                 viewModel.fetchTickerList()
             }
 
-            is DataState.LoadedState -> TickerListComponent(
-                tickerList = tickerListState.value.data!!,
+            is UiState.Success -> TickerListComponent(
+                tickerList = (tickerListState.value as UiState.Success).data!!,
                 onTickerClicked = { onTickerClicked.invoke(it) },
                 sortBy = { selectedTickerSort.value.sort(it) }
             )
 
-            is DataState.LoadingState -> LoadingComponent()
+            is UiState.Loading -> LoadingComponent()
+            is UiState.Initialize -> {
+
+            }
         }
     }
 

@@ -5,7 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.cryptosep.domain.usecase.MarketListUseCase
 import com.example.cryptosep.domain.utils.ResultState
-import com.example.cryptosep.ui.utils.DataState
+import com.example.cryptosep.ui.utils.UiState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.CoroutineScope
@@ -35,8 +35,8 @@ class MarketViewModel @Inject constructor(
         CoroutineScope(Job() + viewModelScope.coroutineContext + SupervisorJob() + ceh)
 
     private val _marketList =
-        MutableStateFlow<DataState<List<String>?>>(DataState.LoadingState(null))
-    val marketList: StateFlow<DataState<List<String>?>> = _marketList
+        MutableStateFlow<UiState<List<String>?>>(UiState.Initialize)
+    val marketList: StateFlow<UiState<List<String>?>> = _marketList
 
     init {
         fetchMarketList()
@@ -46,15 +46,15 @@ class MarketViewModel @Inject constructor(
     private fun fetchMarketList() {
         scope.launch {
             marketListUseCase.invoke().catch {
-                _marketList.value = DataState.FailedState(data = null)
+                _marketList.value = UiState.Failed(it.message ?: "")
             }.collect {
                 when (it) {
-                    is ResultState.Error -> _marketList.value = DataState.FailedState(data = null)
+                    is ResultState.Error -> _marketList.value = UiState.Failed("")
                     is ResultState.Loading -> _marketList.value =
-                        DataState.LoadingState(data = null)
+                        UiState.Loading
 
                     is ResultState.Success -> _marketList.value =
-                        DataState.LoadedState(data = it.data)
+                        UiState.Success(data = it.data)
                 }
             }
         }

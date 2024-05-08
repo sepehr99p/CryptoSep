@@ -6,7 +6,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.cryptosep.domain.entity.CurrencyEntity
 import com.example.cryptosep.domain.usecase.CurrencyListUseCase
 import com.example.cryptosep.domain.utils.ResultState
-import com.example.cryptosep.ui.utils.DataState
+import com.example.cryptosep.ui.utils.UiState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.CoroutineScope
@@ -36,8 +36,8 @@ class CurrencyViewModel @Inject constructor(
         CoroutineScope(Job() + viewModelScope.coroutineContext + SupervisorJob() + ceh)
 
     private val _currencyList =
-        MutableStateFlow<DataState<List<CurrencyEntity>?>>(DataState.LoadingState(null))
-    val currencyList: StateFlow<DataState<List<CurrencyEntity>?>> = _currencyList
+        MutableStateFlow<UiState<List<CurrencyEntity>?>>(UiState.Initialize)
+    val currencyList: StateFlow<UiState<List<CurrencyEntity>?>> = _currencyList
 
     init {
         fetchCurrencyList()
@@ -46,17 +46,17 @@ class CurrencyViewModel @Inject constructor(
     private fun fetchCurrencyList() {
         scope.launch {
             currencyUseCase.invoke().catch {
-                _currencyList.value = DataState.FailedState(data = null)
+                _currencyList.value = UiState.Failed(error = it.message ?: "error")
             }.collect {
                 when (it) {
                     is ResultState.Error ->
-                        _currencyList.value = DataState.FailedState(data = null)
+                        _currencyList.value = UiState.Failed(error = "error")
 
                     is ResultState.Loading ->
-                        _currencyList.value = DataState.LoadingState(data = null)
+                        _currencyList.value = UiState.Loading
 
                     is ResultState.Success ->
-                        _currencyList.value = DataState.LoadedState(data = it.data)
+                        _currencyList.value = UiState.Success(data = it.data)
                 }
             }
         }

@@ -7,7 +7,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.cryptosep.domain.entity.CandleEntity
 import com.example.cryptosep.domain.usecase.CandlesUseCase
 import com.example.cryptosep.domain.utils.ResultState
-import com.example.cryptosep.ui.utils.DataState
+import com.example.cryptosep.ui.utils.UiState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.CoroutineScope
@@ -38,8 +38,8 @@ class CandlesViewModel @Inject constructor(
         CoroutineScope(Job() + viewModelScope.coroutineContext + SupervisorJob() + ceh)
 
     private val _candles =
-        MutableStateFlow<DataState<List<CandleEntity>?>>(DataState.LoadingState(null))
-    val candles: StateFlow<DataState<List<CandleEntity>?>> = _candles
+        MutableStateFlow<UiState<List<CandleEntity>?>>(UiState.Initialize)
+    val candles: StateFlow<UiState<List<CandleEntity>?>> = _candles
 
     private val navigationParam = savedStateHandle.get<String>("symbol")
 
@@ -54,19 +54,19 @@ class CandlesViewModel @Inject constructor(
     fun fetchCandles(symbol: String = navigationParam ?: "") {
         scope.launch {
             candlesUseCase.invoke(interval = interval.value, symbol = symbol).catch {
-                _candles.value = DataState.FailedState(data = null)
+                _candles.value = UiState.Failed(error = it.message ?: "error")
             }.collect {
                 when (it) {
                     is ResultState.Error -> {
-                        _candles.value = DataState.FailedState(data = null)
+                        _candles.value = UiState.Failed(error = "error")
                     }
 
                     is ResultState.Loading -> {
-                        _candles.value = DataState.LoadingState(data = null)
+                        _candles.value = UiState.Loading
                     }
 
                     is ResultState.Success -> {
-                        _candles.value = DataState.LoadedState(data = it.data)
+                        _candles.value = UiState.Success(data = it.data)
                     }
                 }
             }

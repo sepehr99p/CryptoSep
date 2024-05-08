@@ -26,7 +26,6 @@ sealed class NavigationItem(val route: String) {
     data object Currency : NavigationItem(Screen.CURRENCY.name)
     data object Tickers : NavigationItem(Screen.TICKERS.name)
     data object Market : NavigationItem(Screen.MARKET.name)
-
     data object Settings : NavigationItem(Screen.SETTINGS.name)
     data object Candles : NavigationItem(Screen.CANDLES.name)
 }

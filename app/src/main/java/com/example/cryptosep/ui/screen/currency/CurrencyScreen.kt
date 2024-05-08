@@ -5,7 +5,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.example.cryptosep.ui.screen.currency.component.CurrencyListComponent
-import com.example.cryptosep.ui.utils.DataState
+import com.example.cryptosep.ui.utils.UiState
 import com.example.cryptosep.ui.utils.components.LoadingComponent
 
 @Composable
@@ -17,9 +17,12 @@ fun CurrencyScreen(
 
 
     when (currencyState.value) {
-        is DataState.FailedState -> LoadingComponent()
-        is DataState.LoadedState -> CurrencyListComponent(currencyEntities = currencyState.value.data!!)
-        is DataState.LoadingState -> LoadingComponent()
+        is UiState.Failed -> LoadingComponent()
+        is UiState.Success -> CurrencyListComponent(currencyEntities = (currencyState.value as UiState.Success).data!!)
+        is UiState.Loading -> LoadingComponent()
+        is UiState.Initialize -> {
+
+        }
     }
 }
 

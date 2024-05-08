@@ -8,7 +8,7 @@ import com.example.cryptosep.domain.entity.TickerEntity
 import com.example.cryptosep.domain.usecase.FetchTickerUseCase
 import com.example.cryptosep.domain.usecase.TickerListUseCase
 import com.example.cryptosep.domain.utils.ResultState
-import com.example.cryptosep.ui.utils.DataState
+import com.example.cryptosep.ui.utils.UiState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.CoroutineScope
@@ -40,12 +40,12 @@ class TickerViewModel @Inject constructor(
 
 
     private val _tickerList =
-        MutableStateFlow<DataState<List<TickerEntity>?>>(DataState.LoadingState(null))
-    val tickerList: StateFlow<DataState<List<TickerEntity>?>> = _tickerList
+        MutableStateFlow<UiState<List<TickerEntity>?>>(UiState.Initialize)
+    val tickerList: StateFlow<UiState<List<TickerEntity>?>> = _tickerList
 
     private val _ticker =
-        MutableStateFlow<DataState<SingleTickerEntity?>>(DataState.FailedState(null))
-    val ticker: StateFlow<DataState<SingleTickerEntity?>> = _ticker
+        MutableStateFlow<UiState<SingleTickerEntity?>>(UiState.Initialize)
+    val ticker: StateFlow<UiState<SingleTickerEntity?>> = _ticker
 
 
     init {
@@ -55,12 +55,12 @@ class TickerViewModel @Inject constructor(
     fun getTicker(symbol: String) {
         scope.launch {
             tickerUseCase.invoke(symbol).catch {
-                _ticker.value = DataState.FailedState(null)
+                _ticker.value = UiState.Failed("error")
             }.collect {
                 when (it) {
-                    is ResultState.Error -> _ticker.value = DataState.FailedState(null)
-                    is ResultState.Loading -> _ticker.value = DataState.LoadingState(null)
-                    is ResultState.Success -> _ticker.value = DataState.LoadedState(data = it.data)
+                    is ResultState.Error -> _ticker.value = UiState.Failed("error")
+                    is ResultState.Loading -> _ticker.value = UiState.Loading
+                    is ResultState.Success -> _ticker.value = UiState.Success(data = it.data)
                 }
             }
         }
@@ -70,19 +70,19 @@ class TickerViewModel @Inject constructor(
     fun fetchTickerList() {
         scope.launch {
             tickerListUseCase.invoke().catch {
-                _tickerList.value = DataState.FailedState(data = null)
+                _tickerList.value = UiState.Failed(it.message ?: "error")
             }.collect {
                 when (it) {
                     is ResultState.Error -> {
-                        _tickerList.value = DataState.FailedState(data = null)
+                        _tickerList.value = UiState.Failed("error")
                     }
 
                     is ResultState.Loading -> {
-                        _tickerList.value = DataState.LoadingState(data = null)
+                        _tickerList.value = UiState.Loading
                     }
 
                     is ResultState.Success -> {
-                        _tickerList.value = DataState.LoadedState(data = it.data)
+                        _tickerList.value = UiState.Success(data = it.data)
                     }
                 }
             }

@@ -32,7 +32,7 @@ import com.example.cryptosep.ui.theme.dimen.border_2
 import com.example.cryptosep.ui.theme.dimen.corner_16
 import com.example.cryptosep.ui.theme.dimen.corner_8
 import com.example.cryptosep.ui.theme.dimen.padding_8
-import com.example.cryptosep.ui.utils.DataState
+import com.example.cryptosep.ui.utils.UiState
 import com.example.cryptosep.ui.utils.components.ErrorComponent
 import com.example.cryptosep.ui.utils.components.LoadingComponent
 import com.patrykandpatrick.vico.compose.cartesian.CartesianChartHost
@@ -95,19 +95,22 @@ fun CandlesScreen(
         }
 
         when (candlesState.value) {
-            is DataState.FailedState -> ErrorComponent(message = stringResource(id = R.string.error_candles)) {
+            is UiState.Failed -> ErrorComponent(message = stringResource(id = R.string.error_candles)) {
                 viewModel.fetchCandles()
             }
 
 
-            is DataState.LoadedState -> {
+            is UiState.Success -> {
                 CandlesList(
                     modifier = Modifier.weight(1f),
-                    candles = candlesState.value.data ?: listOf()
+                    candles = (candlesState.value as UiState.Success).data ?: listOf()
                 )
             }
 
-            is DataState.LoadingState -> LoadingComponent()
+            is UiState.Loading -> LoadingComponent()
+            is UiState.Initialize -> {
+
+            }
         }
     }
 }
