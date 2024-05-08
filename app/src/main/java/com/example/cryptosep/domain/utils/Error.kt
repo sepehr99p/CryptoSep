@@ -14,13 +14,13 @@ fun <T> checkError(throwable: Throwable): ResultState.Error<T> {
             ResultState.Error(SSL_HANDSHAKE)
         }
         is SocketTimeoutException -> {
-            ResultState.Error(throwable.localizedMessage)
+            ResultState.Error(throwable.localizedMessage ?: "SocketTimeoutException")
         }
         is ProtocolException -> {
-            ResultState.Error(throwable.localizedMessage)
+            ResultState.Error(throwable.localizedMessage ?: "ProtocolException")
         }
         else -> {
-            ResultState.Error(throwable.localizedMessage)
+            ResultState.Error(throwable.localizedMessage ?: "Exception")
         }
     }
 }
