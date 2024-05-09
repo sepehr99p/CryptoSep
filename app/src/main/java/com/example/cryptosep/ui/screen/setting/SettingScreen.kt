@@ -2,12 +2,16 @@ package com.example.cryptosep.ui.screen.setting
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.example.cryptosep.ui.theme.Bold_20
+import com.example.cryptosep.ui.theme.Bold_28
 import com.example.cryptosep.ui.theme.dimen.padding_16
 
 @Composable
@@ -16,6 +20,7 @@ fun SettingsScreen() {
     val selectedExchange = remember { mutableStateOf("Kucoin")}
 
     Column(modifier = Modifier.padding(padding_16)) {
+        Text(text = "Settings", style = Bold_20, color = MaterialTheme.colorScheme.onPrimary)
         ExchangeSelection(selectedExchange = selectedExchange, list = viewModel.exchanges)
         SecretKeyInsertion()
     }
