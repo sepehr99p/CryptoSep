@@ -58,7 +58,7 @@ class TickerViewModel @Inject constructor(
                 _ticker.value = UiState.Failed(it.message ?: "error")
             }.collect {
                 when (it) {
-                    is ResultState.Error -> _ticker.value = UiState.Failed("error")
+                    is ResultState.Error -> _ticker.value = UiState.Failed(it.message ?: "error")
                     is ResultState.Loading -> _ticker.value = UiState.Loading
                     is ResultState.Success -> _ticker.value = UiState.Success(data = it.data)
                 }
@@ -74,7 +74,7 @@ class TickerViewModel @Inject constructor(
             }.collect {
                 when (it) {
                     is ResultState.Error -> {
-                        _tickerList.value = UiState.Failed("error")
+                        _tickerList.value = UiState.Failed(it.message ?: "error")
                     }
 
                     is ResultState.Loading -> {

@@ -49,10 +49,10 @@ class MarketViewModel @Inject constructor(
                 _marketList.value = UiState.Failed(it.message ?: "")
             }.collect {
                 when (it) {
-                    is ResultState.Error -> _marketList.value = UiState.Failed("")
-                    is ResultState.Loading -> _marketList.value =
-                        UiState.Loading
+                    is ResultState.Error -> _marketList.value =
+                        UiState.Failed(it.message ?: "error")
 
+                    is ResultState.Loading -> _marketList.value = UiState.Loading
                     is ResultState.Success -> _marketList.value =
                         UiState.Success(data = it.data)
                 }

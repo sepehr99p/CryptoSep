@@ -50,7 +50,7 @@ class CurrencyViewModel @Inject constructor(
             }.collect {
                 when (it) {
                     is ResultState.Error ->
-                        _currencyList.value = UiState.Failed(error = "error")
+                        _currencyList.value = UiState.Failed(error = it.message ?: "error")
 
                     is ResultState.Loading ->
                         _currencyList.value = UiState.Loading

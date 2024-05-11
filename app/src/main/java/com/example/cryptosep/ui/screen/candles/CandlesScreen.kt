@@ -1,6 +1,5 @@
 package com.example.cryptosep.ui.screen.candles
 
-import android.annotation.SuppressLint
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -144,7 +143,6 @@ private fun CandleChart(
 }
 
 
-@SuppressLint("RestrictedApi")
 @Composable
 fun CandlesList(modifier: Modifier = Modifier, candles: List<CandleEntity>) {
     val modelProducer = remember { CartesianChartModelProducer.build() }

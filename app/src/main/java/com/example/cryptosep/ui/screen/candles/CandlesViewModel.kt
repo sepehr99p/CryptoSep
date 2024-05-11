@@ -58,7 +58,7 @@ class CandlesViewModel @Inject constructor(
             }.collect {
                 when (it) {
                     is ResultState.Error -> {
-                        _candles.value = UiState.Failed(error = "error")
+                        _candles.value = UiState.Failed(error = it.message ?: "error")
                     }
 
                     is ResultState.Loading -> {
