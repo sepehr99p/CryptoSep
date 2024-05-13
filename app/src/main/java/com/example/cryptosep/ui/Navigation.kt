@@ -46,7 +46,7 @@ fun AppNavHost(
             HomeScreen(navController)
         }
         composable(NavigationItem.Currency.route) {
-            CurrencyScreen(navController)
+            CurrencyScreen()
         }
         composable(NavigationItem.Tickers.route) {
             TickerScreen{

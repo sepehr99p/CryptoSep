@@ -57,6 +57,6 @@ private fun CurrencyItemComponentPreview() {
 
 @Preview
 @Composable
-fun CurrencyComponentPreview() {
+private fun CurrencyComponentPreview() {
     CurrencyListComponent()
 }
