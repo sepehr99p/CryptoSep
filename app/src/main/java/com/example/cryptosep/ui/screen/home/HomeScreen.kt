@@ -21,7 +21,6 @@ import androidx.navigation.NavHostController
 import com.example.cryptosep.R
 import com.example.cryptosep.ui.NavigationItem
 import com.example.cryptosep.ui.theme.dimen.corner_8
-import com.example.cryptosep.ui.theme.dimen.padding_16
 import com.example.cryptosep.ui.theme.dimen.padding_24
 import com.example.cryptosep.ui.theme.dimen.padding_32
 import com.example.cryptosep.ui.theme.dimen.padding_4
@@ -63,14 +62,15 @@ private fun TickerItem(modifier: Modifier = Modifier, title: String, callback: (
         .fillMaxWidth()
         .padding(horizontal = padding_8, vertical = padding_4)
         .clip(RoundedCornerShape(corner_8))
-        .shadowBackground()
-        .padding(horizontal = padding_8, vertical = padding_32)
         .clickable(
             interactionSource = interactionSource,
             indication = null
         ) {
             callback.invoke()
-        }) {
+        }
+        .shadowBackground()
+        .padding(horizontal = padding_8, vertical = padding_32)
+    ) {
         Text(
             modifier = Modifier.align(Alignment.Center),
             text = title,
@@ -86,14 +86,15 @@ private fun HomeItems(modifier: Modifier = Modifier, title: String, callback: ()
         .fillMaxWidth()
         .padding(horizontal = padding_8, vertical = padding_4)
         .clip(RoundedCornerShape(corner_8))
-        .shadowBackground()
-        .padding(horizontal = padding_8, vertical = padding_24)
         .clickable(
             interactionSource = interactionSource,
             indication = null
         ) {
             callback.invoke()
-        }) {
+        }
+        .shadowBackground()
+        .padding(horizontal = padding_8, vertical = padding_24)
+    ) {
         Text(
             modifier = Modifier.align(Alignment.Center),
             text = title,
