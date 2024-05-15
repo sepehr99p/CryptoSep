@@ -11,7 +11,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.cryptosep.ui.theme.Bold_20
-import com.example.cryptosep.ui.theme.Bold_28
 import com.example.cryptosep.ui.theme.dimen.padding_16
 
 @Composable

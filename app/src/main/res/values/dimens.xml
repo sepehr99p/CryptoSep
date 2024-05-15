@@ -48,6 +48,13 @@
     <dimen name="image_60">60dp</dimen>
     <dimen name="image_72">72dp</dimen>
 
+    <integer name="font10">10</integer>
+    <integer name="font12">12</integer>
+    <integer name="font14">14</integer>
+    <integer name="font16">16</integer>
+    <integer name="font18">18</integer>
+    <integer name="font20">20</integer>
+
 
     <dimen name="height_56">56dp</dimen>
 
