@@ -11,28 +11,28 @@ import retrofit2.http.Query
 
 interface KucoinApiService {
 
-    @GET("/api/v3/currencies")
+    @GET(currencyList)
     suspend fun fetchCurrencyList(): Response<BaseResponse<List<CurrencyResponse>>>
 
-    @GET("/api/v1/market/orderbook/level1")
+    @GET(fetchTicker)
     suspend fun fetchTicker(@Query("symbol") symbol: String): Response<BaseResponse<SingleTickerResponse>>
 
-    @GET("/api/v1/market/allTickers")
+    @GET(fetchAllTickers)
     suspend fun fetchAllTickers(): Response<BaseResponse<AllTickersResponse>>
 
-    @GET("/api/v1/markets")
-    suspend fun fetchMarketList() : Response<BaseResponse<List<String>>>
+    @GET(marketList)
+    suspend fun fetchMarketList(): Response<BaseResponse<List<String>>>
 
-    @GET("/api/v1/market/candles")
+    @GET(candles)
     suspend fun fetchCandles(
-        @Query("type") type : String,
-        @Query("symbol") symbol : String
-    ) : Response<BaseResponse<List<List<String>>>>
+        @Query("type") type: String,
+        @Query("symbol") symbol: String
+    ): Response<BaseResponse<List<List<String>>>>
 
-    @GET("/api/v1/timestamp")
-    suspend fun serverTime() : Response<BaseResponse<Long>>
+    @GET(serverTime)
+    suspend fun serverTime(): Response<BaseResponse<Long>>
 
-    @GET("/api/v1/prices")
-    suspend fun getPrices() : Response<BaseResponse<PriceResponse>>
+    @GET(fetchPrices)
+    suspend fun getPrices(): Response<BaseResponse<PriceResponse>>
 
 }

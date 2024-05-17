@@ -1,4 +1,4 @@
-package com.example.cryptosep.ui.screen.ticker
+ package com.example.cryptosep.ui.screen.ticker
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
