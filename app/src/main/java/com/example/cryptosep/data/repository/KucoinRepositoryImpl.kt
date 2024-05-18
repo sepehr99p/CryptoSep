@@ -23,27 +23,68 @@ class KucoinRepositoryImpl @Inject constructor(
     private val networkConnection: NetworkConnection
 ) :
     KucoinRepository {
-    override suspend fun fetchCurrencyList(): ResultState<List<CurrencyEntity>> =
-        toResultState(apiService.fetchCurrencyList(), currencyListMapper)
 
-    override suspend fun fetchTicker(symbol: String): ResultState<SingleTickerEntity> =
-        toResultState(apiService.fetchTicker(symbol), tickerMapper)
+    private fun <T> noInternetResultState() =
+        ResultState.Error<T>(message = "no internet connection")
 
-    override suspend fun fetchAllTickers(): ResultState<List<TickerEntity>> =
-        toResultState(apiService.fetchAllTickers(), tickerListMapper)
+    override suspend fun fetchCurrencyList(): ResultState<List<CurrencyEntity>> {
+        return if (networkConnection.isInternetOn()) {
+            toResultState(apiService.fetchCurrencyList(), currencyListMapper)
+        } else {
+            noInternetResultState()
+        }
+    }
 
-    override suspend fun fetchMarketList(): ResultState<List<String>> =
-        toResultState(apiService.fetchMarketList(), marketListMapper)
+    override suspend fun fetchTicker(symbol: String): ResultState<SingleTickerEntity> {
+        return if (networkConnection.isInternetOn()) {
+            toResultState(apiService.fetchTicker(symbol), tickerMapper)
+        } else {
+            noInternetResultState()
+        }
+    }
+
+
+    override suspend fun fetchAllTickers(): ResultState<List<TickerEntity>> {
+        return if (networkConnection.isInternetOn()) {
+            toResultState(apiService.fetchAllTickers(), tickerListMapper)
+        } else {
+            noInternetResultState()
+        }
+    }
+
+
+    override suspend fun fetchMarketList(): ResultState<List<String>> {
+        return if (networkConnection.isInternetOn()) {
+            toResultState(apiService.fetchMarketList(), marketListMapper)
+        } else {
+            noInternetResultState()
+        }
+    }
 
     override suspend fun fetchCandles(
         interval: String,
         symbol: String
-    ): ResultState<List<CandleEntity>> =
-        toResultState(apiService.fetchCandles(interval, symbol), candlesMapper)
+    ): ResultState<List<CandleEntity>> {
+        return if (networkConnection.isInternetOn()) {
+            toResultState(apiService.fetchCandles(interval, symbol), candlesMapper)
+        } else {
+            noInternetResultState()
+        }
+    }
 
-    override suspend fun fetchServerTime(): ResultState<Long> =
-        toResultState(apiService.serverTime(), serverTimeMapper)
+    override suspend fun fetchServerTime(): ResultState<Long> {
+        return if (networkConnection.isInternetOn()) {
+            toResultState(apiService.serverTime(), serverTimeMapper)
+        } else {
+            noInternetResultState()
+        }
+    }
 
-    override suspend fun fetchPrices(): ResultState<String> =
-        toResultState(apiService.getPrices(), priceMapper)
+    override suspend fun fetchPrices(): ResultState<String> {
+        return if (networkConnection.isInternetOn()) {
+            toResultState(apiService.getPrices(), priceMapper)
+        } else {
+            noInternetResultState()
+        }
+    }
 }
