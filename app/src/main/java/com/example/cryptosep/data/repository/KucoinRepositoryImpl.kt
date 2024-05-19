@@ -9,6 +9,7 @@ import com.example.cryptosep.data.mapper.tickerListMapper
 import com.example.cryptosep.data.mapper.tickerMapper
 import com.example.cryptosep.data.mapper.toResultState
 import com.example.cryptosep.data.remote.KucoinApiService
+import com.example.cryptosep.data.utils.ERROR_CONNECTION
 import com.example.cryptosep.data.utils.NetworkConnection
 import com.example.cryptosep.domain.entity.CandleEntity
 import com.example.cryptosep.domain.entity.CurrencyEntity
@@ -25,7 +26,7 @@ class KucoinRepositoryImpl @Inject constructor(
     KucoinRepository {
 
     private fun <T> noInternetResultState() =
-        ResultState.Error<T>(message = "no internet connection")
+        ResultState.Error<T>(message = ERROR_CONNECTION)
 
     override suspend fun fetchCurrencyList(): ResultState<List<CurrencyEntity>> {
         return if (networkConnection.isInternetOn()) {
