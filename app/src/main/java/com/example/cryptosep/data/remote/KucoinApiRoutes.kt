@@ -9,3 +9,4 @@ internal const val serverTime = "/api/v1/timestamp"
 internal const val fetchPrices = "/api/v1/prices"
 
 internal const val accountSummary = "/api/v2/user-info"
+internal const val accounts = "/api/v1/accounts"

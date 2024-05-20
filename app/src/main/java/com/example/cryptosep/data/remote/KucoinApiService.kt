@@ -1,5 +1,6 @@
 package com.example.cryptosep.data.remote
 
+import com.example.cryptosep.data.model.AccountResponse
 import com.example.cryptosep.data.model.AccountSummeryResponse
 import com.example.cryptosep.data.model.AllTickersResponse
 import com.example.cryptosep.data.model.BaseResponse
@@ -38,5 +39,8 @@ interface KucoinApiService {
 
     @GET(accountSummary)
     suspend fun getAccountSummery() : Response<BaseResponse<AccountSummeryResponse>>
+
+    @GET(accounts)
+    suspend fun fetchAccount() : Response<BaseResponse<List<AccountResponse>>>
 
 }
