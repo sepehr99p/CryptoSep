@@ -7,3 +7,5 @@ internal const val marketList = "/api/v1/markets"
 internal const val candles = "/api/v1/market/candles"
 internal const val serverTime = "/api/v1/timestamp"
 internal const val fetchPrices = "/api/v1/prices"
+
+internal const val accountSummary = "/api/v2/user-info"
